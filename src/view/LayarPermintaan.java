@@ -14,7 +14,7 @@ public class LayarPermintaan extends JPanel {
     
     private Color warnaLatar = new Color(240, 242, 245);
     private Color warnaPrimer = new Color(76, 153, 76); 
-private Color warnaAksen = new Color(45, 136, 45); 
+    private Color warnaAksen = new Color(45, 136, 45); 
     private Color warnaKartu = Color.WHITE;
 
     public LayarPermintaan() {
@@ -42,6 +42,9 @@ private Color warnaAksen = new Color(45, 136, 45);
             new LineBorder(new Color(230, 230, 230), 1, true),
             new EmptyBorder(20, 20, 20, 20)
         ));
+
+        // Set maximum width for form panel
+        formPanel.setMaximumSize(new Dimension(500, Integer.MAX_VALUE));
 
         // Nama
         fieldNama = createStyledTextField();
@@ -81,12 +84,30 @@ private Color warnaAksen = new Color(45, 136, 45);
         
         formPanel.add(buttonPanel);
 
-        // Wrap form in a scroll pane
-        JScrollPane scrollPane = new JScrollPane(formPanel);
-        scrollPane.setBorder(new EmptyBorder(0, 40, 20, 40));
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        // Membuat wrapper panel for horizontal centering
+        JPanel wrapperPanel = new JPanel(new GridBagLayout());
+        wrapperPanel.setBackground(warnaLatar);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.anchor = GridBagConstraints.CENTER;
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.insets = new Insets(0, 20, 20, 20); // Add padding
 
-        add(headerPanel, BorderLayout.NORTH);
+        // Menambah form panel ke wrapper
+        wrapperPanel.add(formPanel, gbc);
+
+        // Membuat scroll pane
+        JScrollPane scrollPane = new JScrollPane(wrapperPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.setBackground(warnaLatar);
+
+        // Set kolom header view ke header panel
+        scrollPane.setColumnHeaderView(headerPanel);
+
         add(scrollPane, BorderLayout.CENTER);
     }
 
@@ -156,7 +177,7 @@ private Color warnaAksen = new Color(45, 136, 45);
             System.out.println("Icon not found: " + iconPath);
         }
 
-        // Hover effect
+        // Hover 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(isPrimary ? warnaAksen : warnaPrimer);

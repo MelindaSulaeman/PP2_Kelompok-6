@@ -35,6 +35,45 @@ public class Main extends JFrame {
         add(panelUtama);
     }
 
+    private boolean validateForm() {
+        String nama = layarPermintaan.getFieldNama().getText().trim();
+        String alamat = layarPermintaan.getFieldAlamat().getText().trim();
+        String jenisSampah = (String) layarPermintaan.getComboJenisSampah().getSelectedItem();
+        String deskripsi = layarPermintaan.getFieldDeskripsi().getText().trim();
+        
+        StringBuilder errorMessage = new StringBuilder("Mohon lengkapi data berikut:\n");
+        boolean isValid = true;
+        
+        if (nama.isEmpty()) {
+            errorMessage.append("- Nama Lengkap\n");
+            isValid = false;
+        }
+        
+        if (alamat.isEmpty()) {
+            errorMessage.append("- Alamat Lengkap\n");
+            isValid = false;
+        }
+        
+        if (jenisSampah.equals("Pilih Jenis Sampah")) {
+            errorMessage.append("- Jenis Sampah\n");
+            isValid = false;
+        }
+        
+        if (deskripsi.isEmpty()) {
+            errorMessage.append("- Deskripsi Sampah\n");
+            isValid = false;
+        }
+        
+        if (!isValid) {
+            JOptionPane.showMessageDialog(this,
+                errorMessage.toString(),
+                "Data Tidak Lengkap",
+                JOptionPane.WARNING_MESSAGE);
+        }
+        
+        return isValid;
+    }
+
     private void setupEventListeners() {
         // Event listener untuk layar beranda
         layarBeranda.getTombolLihatJenis().addActionListener(e -> 
@@ -48,15 +87,38 @@ public class Main extends JFrame {
             tataLetak.show(panelUtama, "BERANDA"));
         
         // Event listener untuk layar permintaan
-        layarPermintaan.getTombolKembali().addActionListener(e -> 
-            tataLetak.show(panelUtama, "BERANDA"));
+        layarPermintaan.getTombolKembali().addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(this,
+                "Apakah Anda yakin ingin kembali?\nData yang telah diisi akan hilang.",
+                "Konfirmasi",
+                JOptionPane.YES_NO_OPTION);
+                
+            if (confirm == JOptionPane.YES_OPTION) {
+                // Reset form fields
+                layarPermintaan.getFieldNama().setText("");
+                layarPermintaan.getFieldAlamat().setText("");
+                layarPermintaan.getComboJenisSampah().setSelectedIndex(0);
+                layarPermintaan.getFieldDeskripsi().setText("");
+                
+                tataLetak.show(panelUtama, "BERANDA");
+            }
+        });
         
         layarPermintaan.getTombolKirim().addActionListener(e -> {
-            JOptionPane.showMessageDialog(this,
-                "Permintaan penjemputan telah berhasil dikirim!\nTim kami akan menghubungi Anda segera.",
-                "Berhasil",
-                JOptionPane.INFORMATION_MESSAGE);
-            tataLetak.show(panelUtama, "BERANDA");
+            if (validateForm()) {
+                JOptionPane.showMessageDialog(this,
+                    "Permintaan penjemputan telah berhasil dikirim!\nTim kami akan menghubungi Anda segera.",
+                    "Berhasil",
+                    JOptionPane.INFORMATION_MESSAGE);
+                    
+                // Reset form fields after successful submission
+                layarPermintaan.getFieldNama().setText("");
+                layarPermintaan.getFieldAlamat().setText("");
+                layarPermintaan.getComboJenisSampah().setSelectedIndex(0);
+                layarPermintaan.getFieldDeskripsi().setText("");
+                
+                tataLetak.show(panelUtama, "BERANDA");
+            }
         });
     }
 
