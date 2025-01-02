@@ -1,4 +1,5 @@
-package view;
+package PP2_Kelompok_6.src.view;
+
 
 import java.awt.*;
 import javax.swing.*;
@@ -8,8 +9,8 @@ public class LayarBeranda extends JPanel {
     private JButton tombolLihatJenis;
     private JButton tombolPermintaan;
     private Color warnaLatar = new Color(240, 242, 245);
-    private Color warnaPrimer = new Color(76, 153, 76); 
-private Color warnaAksen = new Color(45, 136, 45); 
+    private Color warnaPrimer = new Color(76, 153, 76);
+private Color warnaAksen = new Color(45, 136, 45);
 
     public LayarBeranda() {
         setLayout(new BorderLayout());

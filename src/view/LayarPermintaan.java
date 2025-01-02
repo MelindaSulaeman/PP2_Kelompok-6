@@ -1,4 +1,5 @@
-package view;
+package PP2_Kelompok_6.src.view;
+
 
 import java.awt.*;
 import javax.swing.*;
@@ -11,10 +12,10 @@ public class LayarPermintaan extends JPanel {
     private JTextArea fieldDeskripsi;
     private JButton tombolKirim;
     private JButton tombolKembali;
-    
+
     private Color warnaLatar = new Color(240, 242, 245);
-    private Color warnaPrimer = new Color(76, 153, 76); 
-    private Color warnaAksen = new Color(45, 136, 45); 
+    private Color warnaPrimer = new Color(76, 153, 76);
+    private Color warnaAksen = new Color(45, 136, 45);
     private Color warnaKartu = Color.WHITE;
 
     public LayarPermintaan() {
@@ -28,7 +29,7 @@ public class LayarPermintaan extends JPanel {
         JPanel headerPanel = new JPanel();
         headerPanel.setBackground(warnaLatar);
         headerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        
+
         JLabel labelJudul = new JLabel("Formulir Permintaan Penjemputan");
         labelJudul.setFont(new Font("Arial", Font.BOLD, 24));
         labelJudul.setForeground(warnaPrimer);
@@ -75,13 +76,13 @@ public class LayarPermintaan extends JPanel {
         // Button Panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         buttonPanel.setBackground(warnaKartu);
-        
+
         tombolKirim = createStyledButton("Kirim Permintaan", "/icons/send.png", true);
         tombolKembali = createStyledButton("Kembali", "/icons/back.png", false);
-        
+
         buttonPanel.add(tombolKirim);
         buttonPanel.add(tombolKembali);
-        
+
         formPanel.add(buttonPanel);
 
         // Membuat wrapper panel for horizontal centering
@@ -120,11 +121,11 @@ public class LayarPermintaan extends JPanel {
         JLabel labelComponent = new JLabel(label);
         labelComponent.setFont(new Font("Arial", Font.BOLD, 14));
         labelComponent.setForeground(new Color(51, 51, 51));
-        
+
         panel.add(labelComponent);
         panel.add(Box.createVerticalStrut(5));
         panel.add(component);
-        
+
         return panel;
     }
 
@@ -177,7 +178,7 @@ public class LayarPermintaan extends JPanel {
             System.out.println("Icon not found: " + iconPath);
         }
 
-        // Hover 
+        // Hover
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(isPrimary ? warnaAksen : warnaPrimer);
