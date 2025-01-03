@@ -7,9 +7,11 @@ import javax.swing.border.*;
 public class LayarBeranda extends JPanel {
     private JButton tombolLihatJenis;
     private JButton tombolPermintaan;
+    private JButton tombolRiwayat;
+    private JButton tombolPoin;
     private Color warnaLatar = new Color(240, 242, 245);
-    private Color warnaPrimer = new Color(76, 153, 76); 
-private Color warnaAksen = new Color(45, 136, 45); 
+    private Color warnaPrimer = new Color(76, 153, 76);
+    private Color warnaAksen = new Color(45, 136, 45);
 
     public LayarBeranda() {
         setLayout(new BorderLayout());
@@ -53,11 +55,17 @@ private Color warnaAksen = new Color(45, 136, 45);
 
         tombolLihatJenis = createStyledButton("Lihat Jenis dan Kategori Sampah", "/icons/category.png");
         tombolPermintaan = createStyledButton("Ajukan Permintaan Penjemputan", "/icons/truck.png");
+        tombolRiwayat = createStyledButton("Riwayat Penjemputan", "/icons/history.png");
+        tombolPoin = createStyledButton("Total Sampah & Poin", "/icons/points.png");
 
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(tombolLihatJenis);
         buttonPanel.add(Box.createVerticalStrut(20));
         buttonPanel.add(tombolPermintaan);
+        buttonPanel.add(Box.createVerticalStrut(20));
+        buttonPanel.add(tombolRiwayat);
+        buttonPanel.add(Box.createVerticalStrut(20));
+        buttonPanel.add(tombolPoin);
         buttonPanel.add(Box.createVerticalGlue());
 
         // Panel Utama
@@ -105,5 +113,13 @@ private Color warnaAksen = new Color(45, 136, 45);
 
     public JButton getTombolPermintaan() {
         return tombolPermintaan;
+    }
+
+    public JButton getTombolRiwayat() {
+        return tombolRiwayat;
+    }
+
+    public JButton getTombolPoin() {
+        return tombolPoin;
     }
 }

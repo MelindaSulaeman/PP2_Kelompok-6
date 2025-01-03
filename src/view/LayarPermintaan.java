@@ -5,16 +5,36 @@ import javax.swing.*;
 import javax.swing.border.*;
 
 public class LayarPermintaan extends JPanel {
+    private CardLayout cardLayout;
+    private JPanel cardPanel;
+    
+    // Page 1 - Personal Data
     private JTextField fieldNama;
-    private JTextArea fieldAlamat;
+    private JTextField fieldEmail;
+    private JTextField fieldTelepon;
+    
+    // Page 2 - Waste Details
     private JComboBox<String> comboJenisSampah;
+    private JTextField fieldBerat;
+    private JSpinner dateSpinner;
     private JTextArea fieldDeskripsi;
+    
+    // Page 3 - Location
+    private JTextArea fieldAlamat;
+    private JTextField fieldKota;
+    private JTextField fieldKodePos;
+    
+    // Navigation buttons
+    private JButton tombolNext1;
+    private JButton tombolNext2;
+    private JButton tombolBack1;
+    private JButton tombolBack2;
     private JButton tombolKirim;
     private JButton tombolKembali;
     
     private Color warnaLatar = new Color(240, 242, 245);
-    private Color warnaPrimer = new Color(76, 153, 76); 
-    private Color warnaAksen = new Color(45, 136, 45); 
+    private Color warnaPrimer = new Color(76, 153, 76);
+    private Color warnaAksen = new Color(45, 136, 45);
     private Color warnaKartu = Color.WHITE;
 
     public LayarPermintaan() {
@@ -24,39 +44,110 @@ public class LayarPermintaan extends JPanel {
     }
 
     private void initComponents() {
-        // Header Panel
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(warnaLatar);
-        headerPanel.setBorder(new EmptyBorder(20, 20, 20, 20));
-        
-        JLabel labelJudul = new JLabel("Formulir Permintaan Penjemputan");
-        labelJudul.setFont(new Font("Arial", Font.BOLD, 24));
-        labelJudul.setForeground(warnaPrimer);
-        headerPanel.add(labelJudul);
+        cardLayout = new CardLayout();
+        cardPanel = new JPanel(cardLayout);
+        cardPanel.setBackground(warnaLatar);
 
-        // Form Panel
-        JPanel formPanel = new JPanel();
-        formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-        formPanel.setBackground(warnaKartu);
-        formPanel.setBorder(BorderFactory.createCompoundBorder(
+        // Initialize all pages
+        cardPanel.add(createPersonalDataPage(), "PAGE_1");
+        cardPanel.add(createWasteDetailsPage(), "PAGE_2");
+        cardPanel.add(createLocationPage(), "PAGE_3");
+
+        add(cardPanel, BorderLayout.CENTER);
+    }
+
+    private JPanel createPersonalDataPage() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBackground(warnaLatar);
+        
+        // Create content panel
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(warnaKartu);
+        contentPanel.setBorder(BorderFactory.createCompoundBorder(
             new LineBorder(new Color(230, 230, 230), 1, true),
             new EmptyBorder(20, 20, 20, 20)
         ));
 
-        // Set maximum width for form panel
-        formPanel.setMaximumSize(new Dimension(500, Integer.MAX_VALUE));
-
-        // Nama
+        // Add title
+        JLabel titleLabel = new JLabel("Data Personal");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(warnaPrimer);
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(titleLabel);
+        contentPanel.add(Box.createVerticalStrut(20));
+        
+        // Add form fields
         fieldNama = createStyledTextField();
-        formPanel.add(createFormField("Nama Lengkap", fieldNama));
-        formPanel.add(Box.createVerticalStrut(15));
+        fieldEmail = createStyledTextField();
+        fieldTelepon = createStyledTextField();
+        
+        contentPanel.add(createFormField("Nama Lengkap *", fieldNama));
+        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(createFormField("Email *", fieldEmail));
+        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(createFormField("Nomor Telepon *", fieldTelepon));
+        contentPanel.add(Box.createVerticalStrut(20));
+        
+        // Add button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setBackground(warnaKartu);
+        tombolNext1 = createStyledButton("Selanjutnya", "/icons/next.png", true);
+        tombolKembali = createStyledButton("Kembali", "/icons/back.png", false);
+        
+        buttonPanel.add(tombolKembali);
+        buttonPanel.add(tombolNext1);
+        contentPanel.add(buttonPanel);
 
-        // Alamat
-        fieldAlamat = createStyledTextArea(3);
-        formPanel.add(createFormField("Alamat Lengkap", new JScrollPane(fieldAlamat)));
-        formPanel.add(Box.createVerticalStrut(15));
+        // Wrap content panel in a container with proper sizing
+        JPanel containerPanel = new JPanel(new GridBagLayout());
+        containerPanel.setBackground(warnaLatar);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(20, 20, 20, 20);
+        
+        containerPanel.add(contentPanel, gbc);
+        
+        // Add to scroll pane
+        JScrollPane scrollPane = new JScrollPane(containerPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getViewport().setBackground(warnaLatar);
+        
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        
+        return mainPanel;
+    }
 
-        // Jenis Sampah
+    private JPanel createWasteDetailsPage() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBackground(warnaLatar);
+        
+        // Create content panel
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(warnaKartu);
+        contentPanel.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(230, 230, 230), 1, true),
+            new EmptyBorder(20, 20, 20, 20)
+        ));
+
+        // Add title
+        JLabel titleLabel = new JLabel("Detail Sampah Elektronik");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(warnaPrimer);
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(titleLabel);
+        contentPanel.add(Box.createVerticalStrut(20));
+        
+        // Add form fields
         comboJenisSampah = createStyledComboBox(new String[]{
             "Pilih Jenis Sampah",
             "Komputer & Laptop",
@@ -64,70 +155,128 @@ public class LayarPermintaan extends JPanel {
             "Peralatan Rumah Tangga",
             "Komponen Elektronik"
         });
-        formPanel.add(createFormField("Jenis Sampah", comboJenisSampah));
-        formPanel.add(Box.createVerticalStrut(15));
-
-        // Deskripsi
+        
+        fieldBerat = createStyledTextField();
+        dateSpinner = new JSpinner(new SpinnerDateModel());
+        JSpinner.DateEditor dateEditor = new JSpinner.DateEditor(dateSpinner, "dd/MM/yyyy");
+        dateSpinner.setEditor(dateEditor);
+        
         fieldDeskripsi = createStyledTextArea(4);
-        formPanel.add(createFormField("Deskripsi Sampah", new JScrollPane(fieldDeskripsi)));
-        formPanel.add(Box.createVerticalStrut(20));
-
-        // Button Panel
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
+        
+        contentPanel.add(createFormField("Jenis Sampah *", comboJenisSampah));
+        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(createFormField("Berat (kg) *", fieldBerat));
+        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(createFormField("Tanggal Penjemputan *", dateSpinner));
+        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(createFormField("Deskripsi Sampah *", new JScrollPane(fieldDeskripsi)));
+        contentPanel.add(Box.createVerticalStrut(20));
+        
+        // Add button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
+        tombolBack1 = createStyledButton("Kembali", "/icons/back.png", false);
+        tombolNext2 = createStyledButton("Selanjutnya", "/icons/next.png", true);
         
-        tombolKirim = createStyledButton("Kirim Permintaan", "/icons/send.png", true);
-        tombolKembali = createStyledButton("Kembali", "/icons/back.png", false);
-        
-        buttonPanel.add(tombolKirim);
-        buttonPanel.add(tombolKembali);
-        
-        formPanel.add(buttonPanel);
+        buttonPanel.add(tombolBack1);
+        buttonPanel.add(tombolNext2);
+        contentPanel.add(buttonPanel);
 
-        // Membuat wrapper panel for horizontal centering
-        JPanel wrapperPanel = new JPanel(new GridBagLayout());
-        wrapperPanel.setBackground(warnaLatar);
+        // Wrap content panel in a container with proper sizing
+        JPanel containerPanel = new JPanel(new GridBagLayout());
+        containerPanel.setBackground(warnaLatar);
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.weightx = 1;
         gbc.weighty = 1;
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.fill = GridBagConstraints.BOTH;
-        gbc.insets = new Insets(0, 20, 20, 20); // Add padding
-
-        // Menambah form panel ke wrapper
-        wrapperPanel.add(formPanel, gbc);
-
-        // Membuat scroll pane
-        JScrollPane scrollPane = new JScrollPane(wrapperPanel);
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(20, 20, 20, 20);
+        
+        containerPanel.add(contentPanel, gbc);
+        
+        // Add to scroll pane
+        JScrollPane scrollPane = new JScrollPane(containerPanel);
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
-        scrollPane.setBackground(warnaLatar);
-
-        // Set kolom header view ke header panel
-        scrollPane.setColumnHeaderView(headerPanel);
-
-        add(scrollPane, BorderLayout.CENTER);
+        scrollPane.getViewport().setBackground(warnaLatar);
+        
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        
+        return mainPanel;
     }
 
-    private JPanel createFormField(String label, JComponent component) {
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBackground(warnaKartu);
-        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    private JPanel createLocationPage() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBackground(warnaLatar);
+        
+        // Create content panel
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.setBackground(warnaKartu);
+        contentPanel.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(230, 230, 230), 1, true),
+            new EmptyBorder(20, 20, 20, 20)
+        ));
 
-        JLabel labelComponent = new JLabel(label);
-        labelComponent.setFont(new Font("Arial", Font.BOLD, 14));
-        labelComponent.setForeground(new Color(51, 51, 51));
+        // Add title
+        JLabel titleLabel = new JLabel("Lokasi Penjemputan");
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(warnaPrimer);
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPanel.add(titleLabel);
+        contentPanel.add(Box.createVerticalStrut(20));
         
-        panel.add(labelComponent);
-        panel.add(Box.createVerticalStrut(5));
-        panel.add(component);
+        // Add form fields
+        fieldAlamat = createStyledTextArea(3);
+        fieldKota = createStyledTextField();
+        fieldKodePos = createStyledTextField();
         
-        return panel;
+        contentPanel.add(createFormField("Alamat Lengkap *", new JScrollPane(fieldAlamat)));
+        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(createFormField("Kota *", fieldKota));
+        contentPanel.add(Box.createVerticalStrut(15));
+        contentPanel.add(createFormField("Kode Pos *", fieldKodePos));
+        contentPanel.add(Box.createVerticalStrut(20));
+        
+        // Add button panel
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.setBackground(warnaKartu);
+        tombolBack2 = createStyledButton("Kembali", "/icons/back.png", false);
+        tombolKirim = createStyledButton("Kirim Permintaan", "/icons/send.png", true);
+        
+        buttonPanel.add(tombolBack2);
+        buttonPanel.add(tombolKirim);
+        contentPanel.add(buttonPanel);
+
+        // Wrap content panel in a container with proper sizing
+        JPanel containerPanel = new JPanel(new GridBagLayout());
+        containerPanel.setBackground(warnaLatar);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.insets = new Insets(20, 20, 20, 20);
+        
+        containerPanel.add(contentPanel, gbc);
+        
+        // Add to scroll pane
+        JScrollPane scrollPane = new JScrollPane(containerPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        scrollPane.getViewport().setBackground(warnaLatar);
+        
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
+        
+        return mainPanel;
     }
 
+    // Helper Methods for Component Styling
     private JTextField createStyledTextField() {
         JTextField textField = new JTextField();
         textField.setFont(new Font("Arial", Font.PLAIN, 14));
@@ -177,7 +326,7 @@ public class LayarPermintaan extends JPanel {
             System.out.println("Icon not found: " + iconPath);
         }
 
-        // Hover 
+        // Hover effect
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(isPrimary ? warnaAksen : warnaPrimer);
@@ -191,11 +340,137 @@ public class LayarPermintaan extends JPanel {
         return button;
     }
 
-    // Getter methods
-    public JTextField getFieldNama() { return fieldNama; }
-    public JTextArea getFieldAlamat() { return fieldAlamat; }
-    public JComboBox<String> getComboJenisSampah() { return comboJenisSampah; }
-    public JTextArea getFieldDeskripsi() { return fieldDeskripsi; }
+    private JPanel createFormField(String label, JComponent component) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(warnaKartu);
+        panel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        JLabel labelComponent = new JLabel(label);
+        labelComponent.setFont(new Font("Arial", Font.BOLD, 14));
+        labelComponent.setForeground(new Color(51, 51, 51));
+        labelComponent.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        component.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        panel.add(labelComponent);
+        panel.add(Box.createVerticalStrut(5));
+        panel.add(component);
+        
+        return panel;
+    }
+
+    private JPanel createBasePanel(String title) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setBackground(warnaKartu);
+        panel.setBorder(BorderFactory.createCompoundBorder(
+            new LineBorder(new Color(230, 230, 230), 1, true),
+            new EmptyBorder(20, 20, 20, 20)
+        ));
+        
+        JLabel titleLabel = new JLabel(title);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(warnaPrimer);
+        titleLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
+        panel.add(titleLabel);
+        panel.add(Box.createVerticalStrut(20));
+        
+        return panel;
+    }
+
+    private JScrollPane wrapInScrollPane(JPanel panel) {
+        JPanel wrapperPanel = new JPanel(new GridBagLayout());
+        wrapperPanel.setBackground(warnaLatar);
+        
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        gbc.anchor = GridBagConstraints.NORTH;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.insets = new Insets(20, 20, 20, 20);
+        
+        wrapperPanel.add(panel, gbc);
+        
+        JScrollPane scrollPane = new JScrollPane(wrapperPanel);
+        scrollPane.setBorder(null);
+        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
+        
+        return scrollPane;
+    }
+
+    // Validation methods
+    public boolean validatePage1() {
+        if (fieldNama.getText().trim().isEmpty()) {
+            showError("Nama harus diisi!");
+            return false;
+        }
+        if (fieldEmail.getText().trim().isEmpty() || !fieldEmail.getText().contains("@")) {
+            showError("Email tidak valid!");
+            return false;
+        }
+        if (fieldTelepon.getText().trim().isEmpty()) {
+            showError("Nomor telepon harus diisi!");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validatePage2() {
+        if (comboJenisSampah.getSelectedIndex() == 0) {
+            showError("Pilih jenis sampah!");
+            return false;
+        }
+        try {
+            double berat = Double.parseDouble(fieldBerat.getText().trim());
+            if (berat <= 0) {
+                showError("Berat harus lebih dari 0!");
+                return false;
+            }
+        } catch (NumberFormatException e) {
+            showError("Berat harus berupa angka!");
+            return false;
+        }
+        if (fieldDeskripsi.getText().trim().isEmpty()) {
+            showError("Deskripsi sampah harus diisi!");
+            return false;
+        }
+        return true;
+    }
+
+    public boolean validatePage3() {
+        if (fieldAlamat.getText().trim().isEmpty()) {
+            showError("Alamat harus diisi!");
+            return false;
+        }
+        if (fieldKota.getText().trim().isEmpty()) {
+            showError("Kota harus diisi!");
+            return false;
+        }
+        if (fieldKodePos.getText().trim().isEmpty()) {
+            showError("Kode pos harus diisi!");
+            return false;
+        }
+        return true;
+    }
+
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    // Navigation methods
+    public void nextPage(String page) {
+        cardLayout.show(cardPanel, page);
+    }
+
+    // Getters for all components
+    public JButton getTombolNext1() { return tombolNext1; }
+    public JButton getTombolNext2() { return tombolNext2; }
+    public JButton getTombolBack1() { return tombolBack1; }
+    public JButton getTombolBack2() { return tombolBack2; }
     public JButton getTombolKirim() { return tombolKirim; }
     public JButton getTombolKembali() { return tombolKembali; }
 }
