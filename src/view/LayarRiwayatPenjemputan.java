@@ -1,24 +1,31 @@
 package view;
 
-import java.awt.*;
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.awt.*;
 
-public class LayarRiwayatPenjemputan extends JPanel {
+public class LayarRiwayatPenjemputan extends JFrame {
     private JPanel panel;
     private JComboBox<String> filterSelect;
     private DefaultTableModel tableModel;
-    private JButton backButton;
 
     public LayarRiwayatPenjemputan() {
+        setTitle("Riwayat Penjemputan Sampah");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
         setLayout(new BorderLayout());
+
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
+
         placeComponents();
+
+        setSize(1000, 600); // Ukuran frame
+        setLocationRelativeTo(null); // Pusatkan frame
+        setVisible(true);
     }
 
     private void placeComponents() {
@@ -29,8 +36,8 @@ public class LayarRiwayatPenjemputan extends JPanel {
         add(titlePanel, BorderLayout.NORTH);
 
         JLabel titleLabel = new JLabel("Riwayat Penjemputan Sampah", JLabel.CENTER);
-        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        titleLabel.setForeground(new Color(34, 139, 34));
+        titleLabel.setFont(new Font("Segoe UI", Font.BOLD, 20)); // Font lebih kecil
+        titleLabel.setForeground(new Color(34, 139, 34)); // Hijau
         titlePanel.add(titleLabel, BorderLayout.CENTER);
 
         // Panel tengah untuk filter dan tabel
@@ -61,14 +68,54 @@ public class LayarRiwayatPenjemputan extends JPanel {
         contentPanel.add(filterPanel, BorderLayout.NORTH);
 
         // Tabel
-        setupTable(contentPanel);
+        String[] columnNames = {"No", "Kategori", "Berat (kg)", "Poin", "Tanggal", "Status"};
+        tableModel = new DefaultTableModel(columnNames, 0) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        JTable table = new JTable(tableModel);
+        table.setRowHeight(25);
+
+        // Header minimalis
+        JTableHeader header = table.getTableHeader();
+        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        header.setBackground(new Color(34, 139, 34));
+        header.setForeground(Color.WHITE);
+        header.setPreferredSize(new Dimension(header.getWidth(), 30));
+
+        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+                if (!isSelected) {
+                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 255, 240));
+                }
+
+                if (column == 5 && "On Progress".equals(value)) { // Kolom "Status"
+                    c.setForeground(Color.RED);
+                } else {
+                    c.setForeground(Color.BLACK);
+                }
+
+                ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
+                return c;
+            }
+        });
+
+        JScrollPane tableScrollPane = new JScrollPane(table);
+        tableScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        tableScrollPane.getVerticalScrollBar().setUI(new CustomScrollBarUI());
+        contentPanel.add(tableScrollPane, BorderLayout.CENTER);
 
         // Tombol kembali
         JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         backPanel.setBackground(Color.WHITE);
         backPanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
 
-        backButton = new JButton("Back");
+        JButton backButton = new JButton("Back");
         backButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         backButton.setBackground(new Color(34, 139, 34));
         backButton.setForeground(Color.WHITE);
@@ -89,91 +136,38 @@ public class LayarRiwayatPenjemputan extends JPanel {
                 loadOldestData();
             }
         });
-    }
 
-    private void setupTable(JPanel contentPanel) {
-        String[] columnNames = {"No", "Kategori", "Berat (kg)", "Poin", "Tanggal"};
-        tableModel = new DefaultTableModel(columnNames, 0) {
-            @Override
-            public boolean isCellEditable(int row, int column) {
-                return false;
-            }
-        };
-
-        JTable table = new JTable(tableModel);
-        table.setRowHeight(25);
-
-        JTableHeader header = table.getTableHeader();
-        header.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        header.setBackground(new Color(34, 139, 34));
-        header.setForeground(Color.WHITE);
-        header.setPreferredSize(new Dimension(header.getWidth(), 30));
-
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (!isSelected) {
-                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 255, 240));
-                }
-                ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
-                return c;
-            }
-        });
-
-        JScrollPane tableScrollPane = new JScrollPane(table);
-        tableScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
-        tableScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
-            @Override
-            protected void configureScrollBarColors() {
-                this.thumbColor = new Color(34, 139, 34);
-                this.trackColor = Color.WHITE;
-            }
-
-            @Override
-            protected JButton createDecreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            @Override
-            protected JButton createIncreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            private JButton createZeroButton() {
-                JButton button = new JButton();
-                button.setPreferredSize(new Dimension(0, 0));
-                button.setMinimumSize(new Dimension(0, 0));
-                button.setMaximumSize(new Dimension(0, 0));
-                return button;
-            }
-        });
-        
-        contentPanel.add(tableScrollPane, BorderLayout.CENTER);
+        backButton.addActionListener(e -> JOptionPane.showMessageDialog(null, "Kembali ke halaman sebelumnya!"));
     }
 
     private void loadAllData() {
         tableModel.setRowCount(0);
         for (int i = 1; i <= 20; i++) {
-            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 2, i * 2 * 200, "01/01/2025"});
+            String status = (i == 20) ? "On Progress" : "Sukses"; // Data terakhir "On Progress"
+            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 2, i * 2 * 200, "01/01/2025", status});
         }
     }
 
     private void loadNewestData() {
         tableModel.setRowCount(0);
-        tableModel.addRow(new Object[]{1, "Sampah Plastik", 10, 2000, "30/12/2025"});
-        tableModel.addRow(new Object[]{2, "Sampah Kertas", 8, 1600, "28/12/2025"});
-        tableModel.addRow(new Object[]{3, "Sampah Elektronik", 15, 3000, "27/12/2025"});
+        tableModel.addRow(new Object[]{1, "Sampah Elektronik", 5, 1000, "05/01/2025", "On Progress"}); // Data terbaru dengan "On Progress"
+        for (int i = 2; i <= 15; i++) {
+            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 3, i * 3 * 100, "04/01/2025", "Sukses"});
+        }
     }
 
     private void loadOldestData() {
         tableModel.setRowCount(0);
-        tableModel.addRow(new Object[]{1, "Sampah Organik", 5, 1000, "01/01/2024"});
-        tableModel.addRow(new Object[]{2, "Sampah Plastik", 12, 2400, "05/01/2024"});
-        tableModel.addRow(new Object[]{3, "Sampah Elektronik", 7, 1400, "10/01/2024"});
+        for (int i = 1; i <= 15; i++) {
+            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 3, i * 3 * 100, "01/01/2024", "Sukses"});
+        }
+        tableModel.addRow(new Object[]{16, "Sampah Elektronik", 7, 1400, "31/12/2023", "On Progress"}); // Data terakhir "On Progress"
     }
+}
 
-    public JButton getTombolKembali() {
-        return backButton;
+class CustomScrollBarUI extends javax.swing.plaf.basic.BasicScrollBarUI {
+    @Override
+    protected void configureScrollBarColors() {
+        this.thumbColor = new Color(34, 139, 34); // Hijau
     }
 }
