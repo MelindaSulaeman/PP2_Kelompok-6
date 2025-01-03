@@ -1,10 +1,9 @@
-package PP2_Kelompok_6.src.view;
+package view;
 
-import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class LayarKonfirmasi extends JPanel {
     private Color warnaLatar = new Color(240, 242, 245);

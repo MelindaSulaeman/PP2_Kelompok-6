@@ -1,8 +1,6 @@
-package PP2_Kelompok_6.src;
-
 import java.awt.*;
 import javax.swing.*;
-import PP2_Kelompok_6.src.view.*;
+import view.*;
 
 public class Main extends JFrame {
     private JPanel panelUtama;
@@ -10,15 +8,14 @@ public class Main extends JFrame {
     private LayarBeranda layarBeranda;
     private LayarJenisSampah layarJenisSampah;
     private LayarPermintaan layarPermintaan;
+    private LayarRiwayatPenjemputan layarRiwayatPenjemputan;
     private LayarTotalSampahPoin layarTotalSampahPoin;
-    private LayarKonfirmasi layarKonfirmasi;
-    private LayarStatusPenjemputan layarStatusPenjemputan;
 
     public Main() {
         setTitle("E-Waste");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        
         initComponents();
         setupEventListeners();
     }
@@ -26,111 +23,97 @@ public class Main extends JFrame {
     private void initComponents() {
         tataLetak = new CardLayout();
         panelUtama = new JPanel(tataLetak);
-
+        
         // Inisialisasi halaman
         layarBeranda = new LayarBeranda();
         layarJenisSampah = new LayarJenisSampah();
         layarPermintaan = new LayarPermintaan();
-        layarKonfirmasi = new LayarKonfirmasi(); // Menambahkan layarKonfirmasi
-        layarStatusPenjemputan = new LayarStatusPenjemputan(); // Menambahkan layarStatusPenjemputan
-        layarTotalSampahPoin = new LayarTotalSampahPoin(); // Menambahkan layarTotalSampahPoin
-
+        layarRiwayatPenjemputan = new LayarRiwayatPenjemputan();
+        layarTotalSampahPoin = new LayarTotalSampahPoin();
+        
         // Tambahkan ke panel utama
         panelUtama.add(layarBeranda, "BERANDA");
         panelUtama.add(layarJenisSampah, "JENIS_SAMPAH");
         panelUtama.add(layarPermintaan, "PERMINTAAN");
-        panelUtama.add(layarKonfirmasi, "KONFIRMASI");
-        panelUtama.add(layarStatusPenjemputan, "STATUS");
-        panelUtama.add(layarTotalSampahPoin, "TOTAL POINT");
-
+        panelUtama.add(layarRiwayatPenjemputan, "RIWAYAT_PENJEMPUTAN");
+        panelUtama.add(layarTotalSampahPoin, "TOTAL_POIN");
+        
         add(panelUtama);
-    }
-
-    private boolean validateForm() {
-        String nama = layarPermintaan.getFieldNama().getText().trim();
-        String alamat = layarPermintaan.getFieldAlamat().getText().trim();
-        String jenisSampah = (String) layarPermintaan.getComboJenisSampah().getSelectedItem();
-        String deskripsi = layarPermintaan.getFieldDeskripsi().getText().trim();
-
-        StringBuilder errorMessage = new StringBuilder("Mohon lengkapi data berikut:\n");
-        boolean isValid = true;
-
-        if (nama.isEmpty()) {
-            errorMessage.append("- Nama Lengkap\n");
-            isValid = false;
-        }
-
-        if (alamat.isEmpty()) {
-            errorMessage.append("- Alamat Lengkap\n");
-            isValid = false;
-        }
-
-        if (jenisSampah.equals("Pilih Jenis Sampah")) {
-            errorMessage.append("- Jenis Sampah\n");
-            isValid = false;
-        }
-
-        if (deskripsi.isEmpty()) {
-            errorMessage.append("- Deskripsi Sampah\n");
-            isValid = false;
-        }
-
-        if (!isValid) {
-            JOptionPane.showMessageDialog(this,
-                    errorMessage.toString(),
-                    "Data Tidak Lengkap",
-                    JOptionPane.WARNING_MESSAGE);
-        }
-
-        return isValid;
     }
 
     private void setupEventListeners() {
         // Event listener untuk layar beranda
-        layarBeranda.getTombolLihatJenis().addActionListener(e ->
-                tataLetak.show(panelUtama, "JENIS_SAMPAH"));
-
-        layarBeranda.getTombolPermintaan().addActionListener(e ->
-                tataLetak.show(panelUtama, "PERMINTAAN"));
-
+        layarBeranda.getTombolLihatJenis().addActionListener(e -> 
+            tataLetak.show(panelUtama, "JENIS_SAMPAH"));
+        
+        layarBeranda.getTombolPermintaan().addActionListener(e -> 
+            tataLetak.show(panelUtama, "PERMINTAAN"));
+        
+        // Tambahkan tombol untuk riwayat dan poin di beranda
+        layarBeranda.getTombolRiwayat().addActionListener(e -> 
+            tataLetak.show(panelUtama, "RIWAYAT_PENJEMPUTAN"));
+            
+        layarBeranda.getTombolPoin().addActionListener(e -> 
+            tataLetak.show(panelUtama, "TOTAL_POIN"));
+        
         // Event listener untuk layar jenis sampah
-        layarJenisSampah.getTombolKembali().addActionListener(e ->
-                tataLetak.show(panelUtama, "BERANDA"));
+        layarJenisSampah.getTombolKembali().addActionListener(e -> 
+            tataLetak.show(panelUtama, "BERANDA"));
+        
+        // Event listeners untuk layar permintaan
+        setupPermintaanListeners();
+        
+        // Event listeners untuk layar riwayat
+        setupRiwayatListeners();
+        
+        // Event listeners untuk layar poin
+        setupPoinListeners();
+    }
 
-        // Event listener untuk layar permintaan
-        layarPermintaan.getTombolKembali().addActionListener(e -> {
-            int confirm = JOptionPane.showConfirmDialog(this,
-                    "Apakah Anda yakin ingin kembali?\nData yang telah diisi akan hilang.",
-                    "Konfirmasi",
-                    JOptionPane.YES_NO_OPTION);
-
-            if (confirm == JOptionPane.YES_OPTION) {
-                // Reset form fields
-                layarPermintaan.getFieldNama().setText("");
-                layarPermintaan.getFieldAlamat().setText("");
-                layarPermintaan.getComboJenisSampah().setSelectedIndex(0);
-                layarPermintaan.getFieldDeskripsi().setText("");
-
-                tataLetak.show(panelUtama, "BERANDA");
+    private void setupPermintaanListeners() {
+        // Navigation buttons
+        layarPermintaan.getTombolKembali().addActionListener(e -> 
+            tataLetak.show(panelUtama, "BERANDA"));
+            
+        layarPermintaan.getTombolNext1().addActionListener(e -> {
+            if (layarPermintaan.validatePage1()) {
+                layarPermintaan.nextPage("PAGE_2");
             }
         });
-
+        
+        layarPermintaan.getTombolNext2().addActionListener(e -> {
+            if (layarPermintaan.validatePage2()) {
+                layarPermintaan.nextPage("PAGE_3");
+            }
+        });
+        
+        layarPermintaan.getTombolBack1().addActionListener(e -> 
+            layarPermintaan.nextPage("PAGE_1"));
+            
+        layarPermintaan.getTombolBack2().addActionListener(e -> 
+            layarPermintaan.nextPage("PAGE_2"));
+        
         layarPermintaan.getTombolKirim().addActionListener(e -> {
-            if (validateForm()) {
+            if (layarPermintaan.validatePage3()) {
                 JOptionPane.showMessageDialog(this,
-                        "Permintaan penjemputan telah berhasil dikirim!\nTim kami akan menghubungi Anda segera.",
-                        "Berhasil",
-                        JOptionPane.INFORMATION_MESSAGE);
-
-                // Reset form fields after successful submission
-                layarPermintaan.getFieldNama().setText("");
-                layarPermintaan.getFieldAlamat().setText("");
-                layarPermintaan.getComboJenisSampah().setSelectedIndex(0);
-                layarPermintaan.getFieldDeskripsi().setText("");
-
+                    "Permintaan penjemputan telah berhasil dikirim!\nTim kami akan menghubungi Anda segera.",
+                    "Berhasil",
+                    JOptionPane.INFORMATION_MESSAGE);
                 tataLetak.show(panelUtama, "BERANDA");
             }
         });
+    }
+    
+    private void setupRiwayatListeners() {
+        // Tombol kembali di layar riwayat
+        layarRiwayatPenjemputan.getTombolKembali().addActionListener(e -> 
+            tataLetak.show(panelUtama, "BERANDA"));
+    }
+    
+    private void setupPoinListeners() {
+        // Tombol kembali di layar poin
+        layarTotalSampahPoin.getTombolKembali().addActionListener(e -> 
+            tataLetak.show(panelUtama, "BERANDA"));
     }
 
     public static void main(String[] args) {
@@ -141,4 +124,3 @@ public class Main extends JFrame {
         });
     }
 }
-
