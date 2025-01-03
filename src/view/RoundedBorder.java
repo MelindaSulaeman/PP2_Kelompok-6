@@ -1,8 +1,8 @@
-package PP2_Kelompok_6.src.view;
+package view;
 
-import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import javax.swing.border.AbstractBorder;
 
 public class RoundedBorder extends AbstractBorder {
     private int radius;
