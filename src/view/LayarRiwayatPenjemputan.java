@@ -68,7 +68,7 @@ public class LayarRiwayatPenjemputan extends JFrame {
         contentPanel.add(filterPanel, BorderLayout.NORTH);
 
         // Tabel
-        String[] columnNames = {"No", "Kategori", "Berat (kg)", "Poin", "Tanggal"};
+        String[] columnNames = {"No", "Kategori", "Berat (kg)", "Poin", "Tanggal", "Status"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -93,6 +93,13 @@ public class LayarRiwayatPenjemputan extends JFrame {
                 if (!isSelected) {
                     c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 255, 240));
                 }
+
+                if (column == 5 && "On Progress".equals(value)) { // Kolom "Status"
+                    c.setForeground(Color.RED);
+                } else {
+                    c.setForeground(Color.BLACK);
+                }
+
                 ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
                 return c;
             }
@@ -136,22 +143,25 @@ public class LayarRiwayatPenjemputan extends JFrame {
     private void loadAllData() {
         tableModel.setRowCount(0);
         for (int i = 1; i <= 20; i++) {
-            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 2, i * 2 * 200, "01/01/2025"});
+            String status = (i == 20) ? "On Progress" : "Sukses"; // Data terakhir "On Progress"
+            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 2, i * 2 * 200, "01/01/2025", status});
         }
     }
 
     private void loadNewestData() {
         tableModel.setRowCount(0);
-        tableModel.addRow(new Object[]{1, "Sampah Plastik", 10, 2000, "30/12/2025"});
-        tableModel.addRow(new Object[]{2, "Sampah Kertas", 8, 1600, "28/12/2025"});
-        tableModel.addRow(new Object[]{3, "Sampah Elektronik", 15, 3000, "27/12/2025"});
+        tableModel.addRow(new Object[]{1, "Sampah Elektronik", 5, 1000, "05/01/2025", "On Progress"}); // Data terbaru dengan "On Progress"
+        for (int i = 2; i <= 15; i++) {
+            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 3, i * 3 * 100, "04/01/2025", "Sukses"});
+        }
     }
 
     private void loadOldestData() {
         tableModel.setRowCount(0);
-        tableModel.addRow(new Object[]{1, "Sampah Organik", 5, 1000, "01/01/2024"});
-        tableModel.addRow(new Object[]{2, "Sampah Plastik", 12, 2400, "05/01/2024"});
-        tableModel.addRow(new Object[]{3, "Sampah Elektronik", 7, 1400, "10/01/2024"});
+        for (int i = 1; i <= 15; i++) {
+            tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 3, i * 3 * 100, "01/01/2024", "Sukses"});
+        }
+        tableModel.addRow(new Object[]{16, "Sampah Elektronik", 7, 1400, "31/12/2023", "On Progress"}); // Data terakhir "On Progress"
     }
 }
 
