@@ -1,11 +1,11 @@
 package view;
 
+import java.awt.*;
+import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
-import java.awt.*;
-import java.awt.geom.RoundRectangle2D;
 
 public class LayarStatusPenjemputan extends JPanel {
     private Color warnaLatar = new Color(240, 242, 245);

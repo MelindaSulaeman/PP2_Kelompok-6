@@ -31,7 +31,7 @@ public class LayarPermintaan extends JPanel {
     private JButton tombolBack2;
     private JButton tombolKirim;
     private JButton tombolKembali;
-    
+
     private Color warnaLatar = new Color(240, 242, 245);
     private Color warnaPrimer = new Color(76, 153, 76);
     private Color warnaAksen = new Color(45, 136, 45);
@@ -175,6 +175,7 @@ public class LayarPermintaan extends JPanel {
         // Add button panel
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
+
         tombolBack1 = createStyledButton("Kembali", "/icons/back.png", false);
         tombolNext2 = createStyledButton("Selanjutnya", "/icons/next.png", true);
         
@@ -246,6 +247,8 @@ public class LayarPermintaan extends JPanel {
         buttonPanel.setBackground(warnaKartu);
         tombolBack2 = createStyledButton("Kembali", "/icons/back.png", false);
         tombolKirim = createStyledButton("Kirim Permintaan", "/icons/send.png", true);
+        tombolKembali = createStyledButton("Kembali", "/icons/back.png", false);
+
         
         buttonPanel.add(tombolBack2);
         buttonPanel.add(tombolKirim);
