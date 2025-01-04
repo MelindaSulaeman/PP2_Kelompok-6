@@ -1,10 +1,10 @@
-package controller;
+package PP2_Kelompok_6.src.controller;
 
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
-import model.Masyarakat;
-import database.config;
+import PP2_Kelompok_6.src.model.Masyarakat;
+import PP2_Kelompok_6.src.database.config;
 
 public class LayarSampahController {
     private JComboBox<String> comboJenisSampah;

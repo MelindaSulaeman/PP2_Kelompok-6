@@ -1,11 +1,11 @@
-package controller;
+package PP2_Kelompok_6.src.controller;
 
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
-import model.Lokasi;
-import model.Penjemputan;
-import database.config;
+import PP2_Kelompok_6.src.model.Lokasi;
+import PP2_Kelompok_6.src.model.Penjemputan;
+import PP2_Kelompok_6.src.database.config;
 
 public class LayarLocationController {
     private JTextArea fieldAlamat;

@@ -1,16 +1,16 @@
-package model;
+package PP2_Kelompok_6.src.model;
 
 public class Lokasi {
     private int idLokasi;
-    private int idPenjemputan;
+    private int idMasyarakat;
     private String alamatLengkap;
     private String kota;
     private String kodePos;
 
     // Constructor
-    public Lokasi(int idLokasi, int idPenjemputan, String alamatLengkap, String kota, String kodePos) {
+    public Lokasi(int idLokasi, int idMasyarakat, String alamatLengkap, String kota, String kodePos) {
         this.idLokasi = idLokasi;
-        this.idPenjemputan = idPenjemputan;
+        this.idMasyarakat = idMasyarakat;
         this.alamatLengkap = alamatLengkap;
         this.kota = kota;
         this.kodePos = kodePos;
@@ -25,12 +25,12 @@ public class Lokasi {
         this.idLokasi = idLokasi;
     }
 
-    public int getIdPenjemputan() {
-        return idPenjemputan;
+    public int getIdMasyarakat() {
+        return idMasyarakat;
     }
 
-    public void setIdPenjemputan(int idPenjemputan) {
-        this.idPenjemputan = idPenjemputan;
+    public void setIdMasyarakat(int idMasyarakat) {
+        this.idMasyarakat = idMasyarakat;
     }
 
     public String getAlamatLengkap() {

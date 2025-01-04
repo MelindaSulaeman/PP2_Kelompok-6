@@ -1,10 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
 
-import controller.LayarLocationController;
-import controller.LayarPermintaanController;
-import controller.LayarSampahController;
-import view.*;
+import PP2_Kelompok_6.src.controller.LayarPermintaanController;
+import PP2_Kelompok_6.src.view.*;
 
 public class Main extends JFrame {
     private JPanel panelUtama;
@@ -21,110 +19,86 @@ public class Main extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         initComponents();
         setupEventListeners();
+        setupControllers();
     }
 
     private void initComponents() {
         tataLetak = new CardLayout();
         panelUtama = new JPanel(tataLetak);
-        
-        // Inisialisasi halaman
+
         layarBeranda = new LayarBeranda();
         layarJenisSampah = new LayarJenisSampah();
         layarPermintaan = new LayarPermintaan();
         layarRiwayatPenjemputan = new LayarRiwayatPenjemputan();
         layarTotalSampahPoin = new LayarTotalSampahPoin();
-        
-        // Tambahkan ke panel utama
+
         panelUtama.add(layarBeranda, "BERANDA");
         panelUtama.add(layarJenisSampah, "JENIS_SAMPAH");
         panelUtama.add(layarPermintaan, "PERMINTAAN");
         panelUtama.add(layarRiwayatPenjemputan, "RIWAYAT_PENJEMPUTAN");
         panelUtama.add(layarTotalSampahPoin, "TOTAL_POIN");
-        
+
         add(panelUtama);
     }
 
     private void setupEventListeners() {
-        // Event listener untuk layar beranda
-        layarBeranda.getTombolLihatJenis().addActionListener(e -> 
-            tataLetak.show(panelUtama, "JENIS_SAMPAH"));
-        
-        layarBeranda.getTombolPermintaan().addActionListener(e -> 
-            tataLetak.show(panelUtama, "PERMINTAAN"));
-        
-        // Tambahkan tombol untuk riwayat dan poin di beranda
-        layarBeranda.getTombolRiwayat().addActionListener(e -> 
-            tataLetak.show(panelUtama, "RIWAYAT_PENJEMPUTAN"));
-            
-        layarBeranda.getTombolPoin().addActionListener(e -> 
-            tataLetak.show(panelUtama, "TOTAL_POIN"));
-        
-        // Event listener untuk layar jenis sampah
-        layarJenisSampah.getTombolKembali().addActionListener(e -> 
-            tataLetak.show(panelUtama, "BERANDA"));
-        
-        // Event listeners untuk layar permintaan
-        setupPermintaanListeners();
-        
-        // Event listeners untuk layar riwayat
+        layarBeranda.getTombolLihatJenis().addActionListener(e ->
+                tataLetak.show(panelUtama, "JENIS_SAMPAH"));
+
+        layarBeranda.getTombolPermintaan().addActionListener(e ->
+                tataLetak.show(panelUtama, "PERMINTAAN"));
+
+        layarBeranda.getTombolRiwayat().addActionListener(e ->
+                tataLetak.show(panelUtama, "RIWAYAT_PENJEMPUTAN"));
+
+        layarBeranda.getTombolPoin().addActionListener(e ->
+                tataLetak.show(panelUtama, "TOTAL_POIN"));
+
+        layarJenisSampah.getTombolKembali().addActionListener(e ->
+                tataLetak.show(panelUtama, "BERANDA"));
+
         setupRiwayatListeners();
-        
-        // Event listeners untuk layar poin
+
         setupPoinListeners();
+    }
+    private void setupControllers() {
+        new LayarPermintaanController(
+                layarPermintaan.getFieldNama(),
+                layarPermintaan.getFieldEmail(),
+                layarPermintaan.getFieldTelepon(),
+                layarPermintaan.getTombolNext1(),
+                layarPermintaan.getTombolKembali(),
+                layarPermintaan.getComboJenisSampah(),
+                layarPermintaan.getFieldBerat(),
+                layarPermintaan.getDateSpinner(),
+                layarPermintaan.getFieldDeskripsi(),
+                layarPermintaan.getTombolNext2(),
+                layarPermintaan.getFieldAlamat(),
+                layarPermintaan.getFieldKota(),
+                layarPermintaan.getFieldKodePos(),
+                layarPermintaan.getTombolKirim(),
+                layarPermintaan
+        );
     }
 
     private void setupPermintaanListeners() {
-        // Navigation buttons
-        layarPermintaan.getTombolKembali().addActionListener(e -> 
-            tataLetak.show(panelUtama, "BERANDA"));
-            
-        layarPermintaan.getTombolNext1().addActionListener(e -> {
-            if (layarPermintaan.validatePage1()) {
-                layarPermintaan.nextPage("PAGE_2");
-            }
-        });
-        
-        layarPermintaan.getTombolNext2().addActionListener(e -> {
-            if (layarPermintaan.validatePage2()) {
-                layarPermintaan.nextPage("PAGE_3");
-            }
-        });
-        
-        layarPermintaan.getTombolBack1().addActionListener(e -> 
-            layarPermintaan.nextPage("PAGE_1"));
-            
-        layarPermintaan.getTombolBack2().addActionListener(e -> 
-            layarPermintaan.nextPage("PAGE_2"));
-        
-        layarPermintaan.getTombolKirim().addActionListener(e -> {
-            if (layarPermintaan.validatePage3()) {
-                JOptionPane.showMessageDialog(this,
-                    "Permintaan penjemputan telah berhasil dikirim!\nTim kami akan menghubungi Anda segera.",
-                    "Berhasil",
-                    JOptionPane.INFORMATION_MESSAGE);
-                tataLetak.show(panelUtama, "BERANDA");
-            }
-        });
+        layarPermintaan.getTombolKembali().addActionListener(e ->
+                tataLetak.show(panelUtama, "BERANDA"));
     }
-    
+
     private void setupRiwayatListeners() {
-        // Tombol kembali di layar riwayat
-        layarRiwayatPenjemputan.getTombolKembali().addActionListener(e -> 
-            tataLetak.show(panelUtama, "BERANDA"));
+        layarRiwayatPenjemputan.getTombolKembali().addActionListener(e ->
+                tataLetak.show(panelUtama, "BERANDA"));
     }
-    
+
     private void setupPoinListeners() {
-        // Tombol kembali di layar poin
-        layarTotalSampahPoin.getTombolKembali().addActionListener(e -> 
-            tataLetak.show(panelUtama, "BERANDA"));
+        layarTotalSampahPoin.getTombolKembali().addActionListener(e ->
+                tataLetak.show(panelUtama, "BERANDA"));
     }
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Main app = new Main();
-            LayarPermintaanController layarPermintaanControllers = new LayarPermintaanController(app.layarPermintaan.getFieldNama(), app.layarPermintaan.getFieldEmail(), app.layarPermintaan.getFieldTelepon(), app.layarPermintaan.getTombolNext1(), app.layarPermintaan.getTombolKembali());
-            LayarSampahController layarSampahController = new LayarSampahController(app.layarPermintaan.getComboJenisSampah(), app.layarPermintaan.getFieldBerat(), app.layarPermintaan.getDateSpinner(), app.layarPermintaan.getFieldDeskripsi(), app.layarPermintaan.getTombolNext2(), app.layarPermintaan.getTombolBack1(), app.layarPermintaan.getFieldidPenjemputan());
-            LayarLocationController layarLocationController = new LayarLocationController(app.layarPermintaan.getFieldAlamat(), app.layarPermintaan.getFieldKota(), app.layarPermintaan.getFieldKodePos(), app.layarPermintaan.getTombolKirim(), app.layarPermintaan.getTombolBack2(), app.layarPermintaan.getFieldidPenjemputan());
             app.setLocationRelativeTo(null);
             app.setVisible(true);
         });
