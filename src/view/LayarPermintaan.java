@@ -23,6 +23,7 @@ public class LayarPermintaan extends JPanel {
     private JTextArea fieldAlamat;
     private JTextField fieldKota;
     private JTextField fieldKodePos;
+    private JTextField idPenjemputan;
     
     // Navigation buttons
     private JButton tombolNext1;
@@ -234,12 +235,15 @@ public class LayarPermintaan extends JPanel {
         fieldAlamat = createStyledTextArea(3);
         fieldKota = createStyledTextField();
         fieldKodePos = createStyledTextField();
+        idPenjemputan = createStyledTextField();
         
         contentPanel.add(createFormField("Alamat Lengkap *", new JScrollPane(fieldAlamat)));
         contentPanel.add(Box.createVerticalStrut(15));
         contentPanel.add(createFormField("Kota *", fieldKota));
         contentPanel.add(Box.createVerticalStrut(15));
         contentPanel.add(createFormField("Kode Pos *", fieldKodePos));
+        contentPanel.add(Box.createVerticalStrut(20));
+        contentPanel.add(createFormField("", idPenjemputan));
         contentPanel.add(Box.createVerticalStrut(20));
         
         // Add button panel
@@ -275,7 +279,7 @@ public class LayarPermintaan extends JPanel {
         scrollPane.getViewport().setBackground(warnaLatar);
         
         mainPanel.add(scrollPane, BorderLayout.CENTER);
-        
+        idPenjemputan.setVisible(false);
         return mainPanel;
     }
 
@@ -476,4 +480,19 @@ public class LayarPermintaan extends JPanel {
     public JButton getTombolBack2() { return tombolBack2; }
     public JButton getTombolKirim() { return tombolKirim; }
     public JButton getTombolKembali() { return tombolKembali; }
+
+    public JTextField getFieldNama() { return fieldNama; }
+    public JTextField getFieldEmail() { return fieldEmail; }
+    public JTextField getFieldTelepon() { return fieldTelepon; }
+
+    public JComboBox<String> getComboJenisSampah() { return comboJenisSampah; }
+    public JTextField getFieldBerat() { return fieldBerat; }
+    public JSpinner getDateSpinner() { return dateSpinner; }
+    public JTextArea getFieldDeskripsi() { return fieldDeskripsi; }
+
+    public JTextArea getFieldAlamat() { return fieldAlamat; }
+    public JTextField getFieldKota() { return fieldKota; }
+    public JTextField getFieldKodePos() { return fieldKodePos; } 
+
+    public JTextField getFieldidPenjemputan() { return idPenjemputan; }
 }

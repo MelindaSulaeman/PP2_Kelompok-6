@@ -1,5 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
+
+import controller.LayarLocationController;
+import controller.LayarPermintaanController;
+import controller.LayarSampahController;
 import view.*;
 
 public class Main extends JFrame {
@@ -15,7 +19,6 @@ public class Main extends JFrame {
         setTitle("E-Waste");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
         initComponents();
         setupEventListeners();
     }
@@ -119,6 +122,9 @@ public class Main extends JFrame {
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             Main app = new Main();
+            LayarPermintaanController layarPermintaanControllers = new LayarPermintaanController(app.layarPermintaan.getFieldNama(), app.layarPermintaan.getFieldEmail(), app.layarPermintaan.getFieldTelepon(), app.layarPermintaan.getTombolNext1(), app.layarPermintaan.getTombolKembali());
+            LayarSampahController layarSampahController = new LayarSampahController(app.layarPermintaan.getComboJenisSampah(), app.layarPermintaan.getFieldBerat(), app.layarPermintaan.getDateSpinner(), app.layarPermintaan.getFieldDeskripsi(), app.layarPermintaan.getTombolNext2(), app.layarPermintaan.getTombolBack1(), app.layarPermintaan.getFieldidPenjemputan());
+            LayarLocationController layarLocationController = new LayarLocationController(app.layarPermintaan.getFieldAlamat(), app.layarPermintaan.getFieldKota(), app.layarPermintaan.getFieldKodePos(), app.layarPermintaan.getTombolKirim(), app.layarPermintaan.getTombolBack2(), app.layarPermintaan.getFieldidPenjemputan());
             app.setLocationRelativeTo(null);
             app.setVisible(true);
         });
