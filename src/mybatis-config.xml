@@ -8,14 +8,14 @@
 			<transactionManager type="JDBC" />
 			<dataSource type="POOLED">
 				<property name="driver" value="com.mysql.cj.jdbc.Driver" />
-				<property name="url" value="jdbc:mysql://localhost:3306/" />
+				<property name="url" value="jdbc:mysql://localhost:3306/pp2-tubes" />
 				<property name="username" value="root" />
 				<property name="password" value="" />
 			</dataSource>
 		</environment>
 	</environments>
 	<mappers>
-                <mapper class="model.UserMapper"/>
+                <mapper class="model.MasyarakatMapper"/>
 		<package name="mapper" />
 	</mappers>
 </configuration>
