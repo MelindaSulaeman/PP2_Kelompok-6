@@ -1,22 +1,26 @@
-package model;
+package PP2_Kelompok_6.src.model;
 
 import java.util.Date;
 
 public class Penjemputan {
     private int idPenjemputan;
     private int idMasyarakat;
-    private int idSampah;
-    private int jumlahSampah;
+    private String namaSampah;
+    private int idKategori;
+    private double beratSampah;
+    private String deskripsi;
     private String statusPenjemputan;
     private int poinDikumpulkan;
     private Date tglPenjemputan;
 
     // Constructor
-    public Penjemputan(int idPenjemputan, int idMasyarakat, int idSampah, int jumlahSampah, String statusPenjemputan, int poinDikumpulkan, Date tglPenjemputan) {
+    public Penjemputan(int idPenjemputan, int idMasyarakat, String namaSampah, int idKategori, double beratSampah, String deskripsi, String statusPenjemputan, int poinDikumpulkan, Date tglPenjemputan) {
         this.idPenjemputan = idPenjemputan;
         this.idMasyarakat = idMasyarakat;
-        this.idSampah = idSampah;
-        this.jumlahSampah = jumlahSampah;
+        this.namaSampah = namaSampah;
+        this.idKategori = idKategori;
+        this.beratSampah = beratSampah;
+        this.deskripsi = deskripsi;
         this.statusPenjemputan = statusPenjemputan;
         this.poinDikumpulkan = poinDikumpulkan;
         this.tglPenjemputan = tglPenjemputan;
@@ -39,20 +43,36 @@ public class Penjemputan {
         this.idMasyarakat = idMasyarakat;
     }
 
-    public int getIdSampah() {
-        return idSampah;
+    public String getNamaSampah() {
+        return namaSampah;
     }
 
-    public void setIdSampah(int idSampah) {
-        this.idSampah = idSampah;
+    public void setNamaSampah(String namaSampah) {
+        this.namaSampah = namaSampah;
     }
 
-    public int getJumlahSampah() {
-        return jumlahSampah;
+    public int getIdKategori() {
+        return idKategori;
     }
 
-    public void setJumlahSampah(int jumlahSampah) {
-        this.jumlahSampah = jumlahSampah;
+    public void setIdKategori(int idKategori) {
+        this.idKategori = idKategori;
+    }
+
+    public double getBeratSampah() {
+        return beratSampah;
+    }
+
+    public void setBeratSampah(double beratSampah) {
+        this.beratSampah = beratSampah;
+    }
+
+    public String getDeskripsi() {
+        return deskripsi;
+    }
+
+    public void setDeskripsi(String deskripsi) {
+        this.deskripsi = deskripsi;
     }
 
     public String getStatusPenjemputan() {

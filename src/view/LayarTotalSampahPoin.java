@@ -1,4 +1,4 @@
-package view;
+package PP2_Kelompok_6.src.view;
 
 import java.awt.*;
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package model;
+package PP2_Kelompok_6.src.model;
 
 import java.util.Date;
 
