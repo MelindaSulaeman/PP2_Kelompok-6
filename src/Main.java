@@ -2,6 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 import PP2_Kelompok_6.src.controller.LayarPermintaanController;
+import PP2_Kelompok_6.src.controller.LayarJenisSampahController;
 import PP2_Kelompok_6.src.view.*;
 
 public class Main extends JFrame {
@@ -79,6 +80,7 @@ public class Main extends JFrame {
                 layarPermintaan.getTombolKirim(),
                 layarPermintaan
         );
+        new LayarJenisSampahController(layarJenisSampah);
     }
 
     private void setupPermintaanListeners() {

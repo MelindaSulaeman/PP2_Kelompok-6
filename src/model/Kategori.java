@@ -3,11 +3,13 @@ package PP2_Kelompok_6.src.model;
 public class Kategori {
     private int idKategori;
     private String namaKategori;
+    private String icon;
 
     // Constructor
-    public Kategori(int idKategori, String namaKategori) {
+    public Kategori(int idKategori, String namaKategori, String icon) {
         this.idKategori = idKategori;
         this.namaKategori = namaKategori;
+        this.icon = icon;
     }
 
     // Getter dan Setter
@@ -25,5 +27,13 @@ public class Kategori {
 
     public void setNamaKategori(String namaKategori) {
         this.namaKategori = namaKategori;
+    }
+
+    public String getIcon() {
+        return icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
     }
 }

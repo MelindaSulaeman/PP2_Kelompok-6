@@ -1,4 +1,4 @@
-package PP2_Kelompok_6.src.controller;
+package controller;
 
 public class Controller {
     
