@@ -1,4 +1,4 @@
-package PP2_Kelompok_6.src.view;
+package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view;
 
 import java.awt.*;
 import javax.swing.*;

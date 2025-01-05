@@ -1,4 +1,4 @@
-package PP2_Kelompok_6.src.model;
+package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model;
 
 public class Kategori {
     private int idKategori;

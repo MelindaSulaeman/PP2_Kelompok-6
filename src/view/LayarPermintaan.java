@@ -1,11 +1,11 @@
-package PP2_Kelompok_6.src.view;
+package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import PP2_Kelompok_6.src.controller.LayarPermintaanController;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller.LayarPermintaanController;
 import java.sql.*;
-import PP2_Kelompok_6.src.database.config;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
 import java.util.HashMap;
 import java.util.Map;
 

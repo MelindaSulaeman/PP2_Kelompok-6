@@ -1,8 +1,8 @@
-package PP2_Kelompok_6.src.controller;
+package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller;
 
-import PP2_Kelompok_6.src.database.config;
-import PP2_Kelompok_6.src.model.Kategori;
-import PP2_Kelompok_6.src.view.LayarJenisSampah;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Kategori;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view.LayarJenisSampah;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
