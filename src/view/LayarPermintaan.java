@@ -1,11 +1,14 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view;
+package view;
+
+import controller.LayarPermintaanController;
+import database.config;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller.LayarPermintaanController;
+
 import java.sql.*;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
+
 import java.util.HashMap;
 import java.util.Map;
 

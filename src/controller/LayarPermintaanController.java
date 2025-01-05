@@ -1,15 +1,15 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller;
+package controller;
 
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Masyarakat;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Penjemputan;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Lokasi;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view.LayarPermintaan;
+
+import database.config;
+import model.Penjemputan;
+import view.LayarPermintaan;
+
 import java.util.Map;
 
 public class LayarPermintaanController {
@@ -49,6 +49,8 @@ public class LayarPermintaanController {
         setupActions();
 
     }
+
+
 
 
     private synchronized void setupActions() {

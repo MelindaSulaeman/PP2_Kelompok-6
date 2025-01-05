@@ -1,11 +1,11 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller;
+package controller;
+
+import database.config;
 
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Lokasi;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Penjemputan;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
+
 
 public class LayarLocationController {
     private JTextArea fieldAlamat;

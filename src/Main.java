@@ -1,9 +1,11 @@
+import controller.LayarJenisSampahController;
+import controller.LayarPermintaanController;
+import view.*;
+
 import java.awt.*;
 import javax.swing.*;
 
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller.LayarPermintaanController;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller.LayarJenisSampahController;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view.*;
+
 
 public class Main extends JFrame {
     private JPanel panelUtama;

@@ -1,10 +1,11 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller;
+package controller;
+
+import database.config;
 
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Masyarakat;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
+
 
 public class LayarSampahController {
     private JComboBox<String> comboJenisSampah;
@@ -109,6 +110,7 @@ public class LayarSampahController {
 
     private int getCategoryIdByName(String categoryName) {
         int categoryId = -1;
+
         try (Connection conn = config.getConnection()) {
             String query = "SELECT idKategori FROM Kategori WHERE namaKategori = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
