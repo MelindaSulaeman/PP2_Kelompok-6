@@ -1,4 +1,4 @@
-package PP2_Kelompok_6.src.model;
+package model;
 
 public class Masyarakat {
     private int idMasyarakat;

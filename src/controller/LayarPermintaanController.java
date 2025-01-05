@@ -1,15 +1,15 @@
-package PP2_Kelompok_6.src.controller;
+package controller;
 
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
 import java.util.Date;
 import java.text.SimpleDateFormat;
-import PP2_Kelompok_6.src.model.Masyarakat;
-import PP2_Kelompok_6.src.model.Penjemputan;
-import PP2_Kelompok_6.src.model.Lokasi;
-import PP2_Kelompok_6.src.database.config;
-import PP2_Kelompok_6.src.view.LayarPermintaan;
+import model.Masyarakat;
+import model.Penjemputan;
+import model.Lokasi;
+import database.config;
+import view.LayarPermintaan;
 import java.util.Map;
 
 public class LayarPermintaanController {
@@ -25,12 +25,12 @@ public class LayarPermintaanController {
     private LayarPermintaan layarPermintaan;
 
     public LayarPermintaanController(JTextField fieldNama, JTextField fieldEmail, JTextField fieldTelepon,
-                                     JButton tombolNext1, JButton tombolKembali,
-                                     JComboBox<String> comboJenisSampah, JTextField fieldBerat,
-                                     JSpinner dateSpinner, JTextArea fieldDeskripsi,
-                                     JButton tombolNext2,
-                                     JTextArea fieldAlamat, JTextField fieldKota,
-                                     JTextField fieldKodePos, JButton tombolKirim, LayarPermintaan layarPermintaan) {
+                                    JButton tombolNext1, JButton tombolKembali,
+                                    JComboBox<String> comboJenisSampah, JTextField fieldBerat,
+                                    JSpinner dateSpinner, JTextArea fieldDeskripsi,
+                                    JButton tombolNext2,
+                                    JTextArea fieldAlamat, JTextField fieldKota,
+                                    JTextField fieldKodePos, JButton tombolKirim, LayarPermintaan layarPermintaan) {
         this.fieldNama = fieldNama;
         this.fieldEmail = fieldEmail;
         this.fieldTelepon = fieldTelepon;

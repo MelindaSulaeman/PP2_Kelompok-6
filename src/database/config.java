@@ -1,4 +1,4 @@
-package PP2_Kelompok_6.src.database;
+package database;
 import java.sql.*;
 
 public class config {

@@ -1,11 +1,11 @@
-package PP2_Kelompok_6.src.view;
+package view;
 
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
-import PP2_Kelompok_6.src.controller.LayarPermintaanController;
+import controller.LayarPermintaanController;
 import java.sql.*;
-import PP2_Kelompok_6.src.database.config;
+import database.config;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -58,7 +58,7 @@ public class LayarPermintaan extends JPanel {
         try (Connection conn = config.getConnection()) {
             String query = "SELECT idKategori, namaKategori FROM kategori";
             try (PreparedStatement stmt = conn.prepareStatement(query);
-                 ResultSet rs = stmt.executeQuery()) {
+                ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     int idKategori = rs.getInt("idKategori");
                     String namaKategori = rs.getString("namaKategori");

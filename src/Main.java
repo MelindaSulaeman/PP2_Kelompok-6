@@ -1,8 +1,8 @@
 import java.awt.*;
 import javax.swing.*;
 
-import PP2_Kelompok_6.src.controller.LayarPermintaanController;
-import PP2_Kelompok_6.src.view.*;
+import controller.LayarPermintaanController;
+import view.*;
 
 public class Main extends JFrame {
     private JPanel panelUtama;
@@ -12,6 +12,7 @@ public class Main extends JFrame {
     private LayarPermintaan layarPermintaan;
     private LayarRiwayatPenjemputan layarRiwayatPenjemputan;
     private LayarTotalSampahPoin layarTotalSampahPoin;
+    private LayarMitra layarMitra;
 
     public Main() {
         setTitle("E-Waste");
@@ -31,12 +32,14 @@ public class Main extends JFrame {
         layarPermintaan = new LayarPermintaan();
         layarRiwayatPenjemputan = new LayarRiwayatPenjemputan();
         layarTotalSampahPoin = new LayarTotalSampahPoin();
+        layarMitra = new LayarMitra();
 
         panelUtama.add(layarBeranda, "BERANDA");
         panelUtama.add(layarJenisSampah, "JENIS_SAMPAH");
         panelUtama.add(layarPermintaan, "PERMINTAAN");
         panelUtama.add(layarRiwayatPenjemputan, "RIWAYAT_PENJEMPUTAN");
         panelUtama.add(layarTotalSampahPoin, "TOTAL_POIN");
+        panelUtama.add(layarMitra, "Mitra");
 
         add(panelUtama);
     }
@@ -56,6 +59,13 @@ public class Main extends JFrame {
 
         layarJenisSampah.getTombolKembali().addActionListener(e ->
                 tataLetak.show(panelUtama, "BERANDA"));
+        
+        layarPermintaan.getTombolKembali().addActionListener(e ->
+                tataLetak.show(panelUtama, "BERANDA"));
+
+        layarBeranda.getTombolKurir().addActionListener(e ->
+                tataLetak.show(panelUtama, "Mitra"));
+        
 
         setupRiwayatListeners();
 

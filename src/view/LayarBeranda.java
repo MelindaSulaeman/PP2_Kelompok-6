@@ -1,4 +1,4 @@
-package PP2_Kelompok_6.src.view;
+package view;
 
 import java.awt.*;
 import javax.swing.*;
@@ -9,6 +9,7 @@ public class LayarBeranda extends JPanel {
     private JButton tombolPermintaan;
     private JButton tombolRiwayat;
     private JButton tombolPoin;
+    private JButton tombolMitra;
     private Color warnaLatar = new Color(240, 242, 245);
     private Color warnaPrimer = new Color(76, 153, 76);
     private Color warnaAksen = new Color(45, 136, 45);
@@ -57,6 +58,7 @@ public class LayarBeranda extends JPanel {
         tombolPermintaan = createStyledButton("Ajukan Permintaan Penjemputan", "/icons/truck.png");
         tombolRiwayat = createStyledButton("Riwayat Penjemputan", "/icons/history.png");
         tombolPoin = createStyledButton("Total Sampah & Poin", "/icons/points.png");
+        tombolMitra = createStyledButton("Mitra Kurir", "/icons/delivery.png");
 
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(tombolLihatJenis);
@@ -66,6 +68,8 @@ public class LayarBeranda extends JPanel {
         buttonPanel.add(tombolRiwayat);
         buttonPanel.add(Box.createVerticalStrut(20));
         buttonPanel.add(tombolPoin);
+        buttonPanel.add(Box.createVerticalStrut(20));
+        buttonPanel.add(tombolMitra);
         buttonPanel.add(Box.createVerticalGlue());
 
         // Panel Utama
@@ -121,5 +125,9 @@ public class LayarBeranda extends JPanel {
 
     public JButton getTombolPoin() {
         return tombolPoin;
+    }
+
+    public JButton getTombolKurir() {
+        return tombolMitra;
     }
 }
