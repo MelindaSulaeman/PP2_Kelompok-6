@@ -15,7 +15,7 @@
 		</environment>
 	</environments>
 	<mappers>
-                <mapper class="model.MasyarakatMapper"/>
+		<mapper class="model.MasyarakatMapper"/>
 		<package name="mapper" />
 	</mappers>
 </configuration>

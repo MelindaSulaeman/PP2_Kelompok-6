@@ -1,6 +1,6 @@
-package PP2_Kelompok_6.src.view;
+package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view;
 
-import PP2_Kelompok_6.src.model.Kategori;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Kategori;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;

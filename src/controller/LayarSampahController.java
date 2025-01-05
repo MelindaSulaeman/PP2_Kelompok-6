@@ -1,10 +1,10 @@
-package PP2_Kelompok_6.src.controller;
+package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller;
 
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
-import PP2_Kelompok_6.src.model.Masyarakat;
-import PP2_Kelompok_6.src.database.config;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Masyarakat;
+import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
 
 public class LayarSampahController {
     private JComboBox<String> comboJenisSampah;

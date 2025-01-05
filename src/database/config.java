@@ -1,4 +1,4 @@
-package PP2_Kelompok_6.src.database;
+package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database;
 
 import java.sql.*;
 
