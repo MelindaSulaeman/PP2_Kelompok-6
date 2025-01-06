@@ -1,11 +1,11 @@
 package controller;
 
-import database.config;
-
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
-
+import model.Lokasi;
+import model.Penjemputan;
+import database.config;
 
 public class LayarLocationController {
     private JTextArea fieldAlamat;

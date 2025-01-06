@@ -1,11 +1,10 @@
 package controller;
 
-import database.config;
-
 import java.awt.event.*;
 import java.sql.*;
 import javax.swing.*;
-
+import model.Masyarakat;
+import database.config;
 
 public class LayarSampahController {
     private JComboBox<String> comboJenisSampah;
@@ -110,7 +109,6 @@ public class LayarSampahController {
 
     private int getCategoryIdByName(String categoryName) {
         int categoryId = -1;
-
         try (Connection conn = config.getConnection()) {
             String query = "SELECT idKategori FROM Kategori WHERE namaKategori = ?";
             try (PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -132,4 +130,3 @@ public class LayarSampahController {
         return 1;  // Replace with actual logic to retrieve logged-in user ID
     }
 }
-
