@@ -1,7 +1,6 @@
 package view;
 
-
-import model.Kategori;
+import model.*;
 
 import java.awt.*;
 import javax.swing.*;
