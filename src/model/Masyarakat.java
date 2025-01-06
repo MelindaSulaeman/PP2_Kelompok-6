@@ -1,4 +1,4 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model;
+package model;
 
 public class Masyarakat {
     private int idMasyarakat;

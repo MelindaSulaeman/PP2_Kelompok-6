@@ -1,4 +1,4 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view;
+package view;
 
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;

@@ -1,8 +1,10 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.controller;
+package controller;
 
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database.config;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Kategori;
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view.LayarJenisSampah;
+
+import database.config;
+import model.Kategori;
+import view.LayarJenisSampah;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;

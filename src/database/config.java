@@ -1,4 +1,4 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.database;
+package database;
 
 import java.sql.*;
 

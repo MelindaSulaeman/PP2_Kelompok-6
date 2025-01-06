@@ -1,6 +1,8 @@
-package PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.view;
+package view;
 
-import PP2_TUBES_Masyarakat_PenjemputanSampah_A.src.model.Kategori;
+
+import model.Kategori;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
