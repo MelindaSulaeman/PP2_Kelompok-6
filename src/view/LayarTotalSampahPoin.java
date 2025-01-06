@@ -66,8 +66,8 @@ public class LayarTotalSampahPoin extends JPanel {
         cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         // Card Sampah
-        JPanel cardSampah = createInfoCard("Total Sampah: 200 Kg", "/icons/garbage.png");
-        JPanel cardPoint = createInfoCard("Total Poin: 350 Poin", "/icons/point.png");
+        JPanel cardSampah = createInfoCard("Total Sampah: 200 Kg", "/resources/icons/garbage.png");
+        JPanel cardPoint = createInfoCard("Total Poin: 350 Poin", "/resources/icons/point.png");
 
         cardsPanel.add(cardSampah);
         cardsPanel.add(cardPoint);

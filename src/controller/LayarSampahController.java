@@ -130,4 +130,3 @@ public class LayarSampahController {
         return 1;  // Replace with actual logic to retrieve logged-in user ID
     }
 }
-

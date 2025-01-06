@@ -134,8 +134,8 @@ public class LayarPermintaan extends JPanel {
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
-        tombolNext1 = createStyledButton("Selanjutnya", "/icons/next.png", true);
-        tombolKembali = createStyledButton("Kembali", "/icons/back.png", false);
+        tombolNext1 = createStyledButton("Selanjutnya", "/resources/icons/next.png", true);
+        tombolKembali = createStyledButton("Kembali", "/resources/icons/back.png", false);
 
         buttonPanel.add(tombolKembali);
         buttonPanel.add(tombolNext1);
@@ -201,8 +201,8 @@ public class LayarPermintaan extends JPanel {
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
-        tombolBack1 = createStyledButton("Kembali", "/icons/back.png", false);
-        tombolNext2 = createStyledButton("Selanjutnya", "/icons/next.png", true);
+        tombolBack1 = createStyledButton("Kembali", "/resources/icons/back.png", false);
+        tombolNext2 = createStyledButton("Selanjutnya", "/resources/icons/next.png", true);
 
         buttonPanel.add(tombolBack1);
         buttonPanel.add(tombolNext2);
@@ -271,8 +271,8 @@ public class LayarPermintaan extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
 
-        tombolBack2 = createStyledButton("Kembali", "/icons/back.png", false);
-        tombolKirim = createStyledButton("Kirim Permintaan", "/icons/send.png", true);
+        tombolBack2 = createStyledButton("Kembali", "/resources/icons/back.png", false);
+        tombolKirim = createStyledButton("Kirim Permintaan", "/resources/icons/send.png", true);
 
         buttonPanel.add(tombolBack2);
         buttonPanel.add(tombolKirim);

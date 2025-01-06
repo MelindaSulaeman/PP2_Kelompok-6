@@ -36,10 +36,10 @@ private Color warnaAksen = new Color(45, 136, 45);
         contentPanel.setBorder(new EmptyBorder(20, 40, 20, 40));
 
         String[][] jenisSampah = {
-            {"Komputer & Laptop", "PC, Laptop, Monitor, Keyboard, Mouse", "/icons/computer.png"},
-            {"Ponsel & Tablet", "Smartphone, Tablet, Pengisi Daya", "/icons/phone.png"},
-            {"Peralatan Rumah Tangga", "TV, Kulkas, Mesin Cuci", "/icons/home.png"},
-            {"Komponen Elektronik", "Baterai, PCB, Kabel", "/icons/chip.png"}
+            {"Komputer & Laptop", "PC, Laptop, Monitor, Keyboard, Mouse", "/resources/icons/computer.png"},
+            {"Ponsel & Tablet", "Smartphone, Tablet, Pengisi Daya", "/resources/icons/phone.png"},
+            {"Peralatan Rumah Tangga", "TV, Kulkas, Mesin Cuci", "/resources/icons/home.png"},
+            {"Komponen Elektronik", "Baterai, PCB, Kabel", "/resources/icons/chip.png"}
         };
 
         for (String[] jenis : jenisSampah) {
@@ -57,7 +57,7 @@ private Color warnaAksen = new Color(45, 136, 45);
         bottomPanel.setBackground(warnaLatar);
         bottomPanel.setBorder(new EmptyBorder(20, 0, 20, 0));
         
-        tombolKembali = createStyledButton("Kembali ke Menu Utama", "/icons/back.png");
+        tombolKembali = createStyledButton("Kembali ke Menu Utama", "/resources/icons/back.png");
         bottomPanel.add(tombolKembali);
 
         add(headerPanel, BorderLayout.NORTH);
