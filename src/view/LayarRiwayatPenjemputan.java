@@ -9,7 +9,8 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import model.Penjemputan;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import controller.LayarRiwayatPenjemputanController;
 
 public class LayarRiwayatPenjemputan extends JPanel {
@@ -18,6 +19,7 @@ public class LayarRiwayatPenjemputan extends JPanel {
     private DefaultTableModel tableModel;
     private JButton backButton;
     private LayarRiwayatPenjemputanController controller;
+    private JTable table;
 
     public LayarRiwayatPenjemputan() {
         setLayout(new BorderLayout());
@@ -93,9 +95,8 @@ public class LayarRiwayatPenjemputan extends JPanel {
         });
     }
 
-
     private void setupTable(JPanel contentPanel) {
-        String[] columnNames = {"No", "Kategori", "Berat (kg)", "Poin", "Tanggal", "Status"};
+        String[] columnNames = {"ID", "Kategori", "Berat (kg)", "Poin", "Tanggal", "Status"};
         tableModel = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -103,30 +104,43 @@ public class LayarRiwayatPenjemputan extends JPanel {
             }
         };
 
-        JTable table = new JTable(tableModel);
+        table = new JTable(tableModel);
         table.setRowHeight(25);
-
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Segoe UI", Font.BOLD, 14));
         header.setBackground(new Color(34, 139, 34));
         header.setForeground(Color.WHITE);
         header.setPreferredSize(new Dimension(header.getWidth(), 30));
 
+        table.getColumnModel().getColumn(0).setMinWidth(0);
+        table.getColumnModel().getColumn(0).setMaxWidth(0);
+        table.getColumnModel().getColumn(0).setWidth(0);
+
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
-            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
                 Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 if (!isSelected) {
                     c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 255, 240));
                 }
                 ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
-
-                if (column == 5 && "On Progress".equals(value)) {
-                    c.setForeground(Color.RED);
-                } else {
-                    c.setForeground(Color.BLACK);
-                }
                 return c;
+            }
+        });
+
+        table.getColumnModel().getColumn(5).setCellRenderer(new LinkRenderer());
+
+        table.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int row = table.rowAtPoint(e.getPoint());
+                int col = table.columnAtPoint(e.getPoint());
+                if (row >= 0 && col == 5) {
+                    int idPenjemputan = (int) table.getValueAt(row, 0);
+                    String status = (String) table.getValueAt(row, 5);
+                    openStatusPerjalanan(idPenjemputan, status);
+                }
             }
         });
 
@@ -138,40 +152,25 @@ public class LayarRiwayatPenjemputan extends JPanel {
                 this.thumbColor = new Color(34, 139, 34);
                 this.trackColor = Color.WHITE;
             }
-
-            @Override
-            protected JButton createDecreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            @Override
-            protected JButton createIncreaseButton(int orientation) {
-                return createZeroButton();
-            }
-
-            private JButton createZeroButton() {
-                JButton button = new JButton();
-                button.setPreferredSize(new Dimension(0, 0));
-                button.setMinimumSize(new Dimension(0, 0));
-                button.setMaximumSize(new Dimension(0, 0));
-                return button;
-            }
         });
 
         contentPanel.add(tableScrollPane, BorderLayout.CENTER);
     }
+
     private void loadData(String filter) {
         tableModel.setRowCount(0);
         List<Object[]> listData = controller.getPenjemputanData(filter);
 
         if (listData != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-            int rowNumber = 1;
             for (Object[] rowData : listData) {
-                Date tglPenjemputan = (Date) rowData[4];
-                String tgl = dateFormat.format(tglPenjemputan);
+                String tgl = null;
+                if (rowData[4] != null) {
+                    Date tglPenjemputan = (Date) rowData[4];
+                    tgl = dateFormat.format(tglPenjemputan);
+                }
                 tableModel.addRow(new Object[]{
-                        rowNumber++,
+                        rowData[0],
                         rowData[1],
                         rowData[2],
                         rowData[3],
@@ -184,7 +183,40 @@ public class LayarRiwayatPenjemputan extends JPanel {
         }
     }
 
+    private void openStatusPerjalanan(int idPenjemputan, String status) {
+        System.out.println("ID Penjemputan: " + idPenjemputan + ", Status: " + status);
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame();
+            LayarStatusPenjemputan layarStatusPenjemputan = new LayarStatusPenjemputan(idPenjemputan);
+            layarStatusPenjemputan.setStatusColor(status);
+            frame.add(layarStatusPenjemputan);
+            frame.setUndecorated(true);
+            frame.pack();
+            frame.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this));
+            frame.setVisible(true);
+        });
+    }
+
     public JButton getTombolKembali() {
         return backButton;
+    }
+
+    class LinkRenderer extends DefaultTableCellRenderer {
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value,
+                                                       boolean isSelected, boolean hasFocus, int row, int column) {
+            JLabel label = new JLabel();
+            String status = (String) value;
+            label.setText("<html><u>" + value + "</u></html>");
+            label.setHorizontalAlignment(JLabel.CENTER);
+
+            if ("Pending".equals(status)) {
+                label.setForeground(Color.RED);
+            } else {
+                label.setForeground(new Color(34, 139, 34)); // Hijau
+            }
+
+            return label;
+        }
     }
 }

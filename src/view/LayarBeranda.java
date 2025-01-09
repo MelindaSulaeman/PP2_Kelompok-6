@@ -53,10 +53,10 @@ public class LayarBeranda extends JPanel {
         buttonPanel.setBorder(new EmptyBorder(20, 40, 40, 40));
 
         tombolLihatJenis = createStyledButton("Lihat Jenis dan Kategori Sampah", "/resources/icons/category.png");
-        tombolPermintaan = createStyledButton("Ajukan Permintaan Penjemputan", "/resources/icons/truck.png");
-        tombolRiwayat = createStyledButton("Riwayat Penjemputan", "/resources/icons/history.png");
-        tombolPoin = createStyledButton("Total Sampah & Poin", "/resources/icons/points.png");
-        tombolMitra = createStyledButton("Mitra Kurir", "/resources/icons/delivery.png");
+        tombolPermintaan = createStyledButton("Ajukan Permintaan Penjemputan", "/resources/icons/delivery.png");
+        tombolRiwayat = createStyledButton("Riwayat Penjemputan", "/resources/icons/order.png");
+        tombolPoin = createStyledButton("Total Sampah & Poin", "/resources/icons/total.png");
+        tombolMitra = createStyledButton("Mitra Kurir", "/resources/icons/pickup.png");
 
         buttonPanel.add(Box.createVerticalGlue());
         buttonPanel.add(tombolLihatJenis);
