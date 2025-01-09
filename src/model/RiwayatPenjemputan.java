@@ -7,14 +7,12 @@ public class RiwayatPenjemputan {
     private Date tglSelesai;
     private int idPenjemputan;
 
-    // Constructor
     public RiwayatPenjemputan(int idRiwayat, Date tglSelesai, int idPenjemputan) {
         this.idRiwayat = idRiwayat;
         this.tglSelesai = tglSelesai;
         this.idPenjemputan = idPenjemputan;
     }
 
-    // Getter dan Setter
     public int getIdRiwayat() {
         return idRiwayat;
     }

@@ -1,5 +1,6 @@
 package view;
 
+import controller.LayarTotalSampahPointController;
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.*;
@@ -7,10 +8,11 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.*;
 
 public class LayarTotalSampahPoin extends JPanel {
-    private JLabel labelTotalSampah;
-    private JLabel labelTotalPoin;
-    private JTable tableRiwayat;
+    public JLabel labelTotalSampah;
+    public JLabel labelTotalPoin;
+    public JTable tableRiwayat;
     private JButton exitButton;
+    private LayarTotalSampahPointController controller;
 
     private Color warnaLatar = new Color(240, 242, 245);
     private Color warnaPrimer = new Color(76, 153, 76);
@@ -22,6 +24,11 @@ public class LayarTotalSampahPoin extends JPanel {
         setLayout(new BorderLayout());
         setBackground(warnaLatar);
         initComponents();
+        initController();
+    }
+
+    public void initController() {
+        controller = new LayarTotalSampahPointController(this);
     }
 
     private void initComponents() {
@@ -29,7 +36,6 @@ public class LayarTotalSampahPoin extends JPanel {
         mainContent.setLayout(new BorderLayout());
         mainContent.setBackground(warnaLatar);
 
-        // Header Section
         JPanel headerTitle = new JPanel(new BorderLayout());
         headerTitle.setBackground(warnaHeader);
         headerTitle.setPreferredSize(new Dimension(getWidth(), 40));
@@ -54,7 +60,6 @@ public class LayarTotalSampahPoin extends JPanel {
         headerContent.add(titleLabel, BorderLayout.CENTER);
         headerTitle.add(headerContent, BorderLayout.CENTER);
 
-        // Cards Container
         JPanel cardsContainer = new JPanel();
         cardsContainer.setLayout(new BoxLayout(cardsContainer, BoxLayout.Y_AXIS));
         cardsContainer.setBackground(warnaLatar);
@@ -65,15 +70,16 @@ public class LayarTotalSampahPoin extends JPanel {
         cardsPanel.setMaximumSize(new Dimension(500, 150));
         cardsPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Card Sampah
-        JPanel cardSampah = createInfoCard("Total Sampah: 200 Kg", "/resources/icons/garbage.png");
-        JPanel cardPoint = createInfoCard("Total Poin: 350 Poin", "/resources/icons/point.png");
+        JPanel cardSampah = createInfoCard("Total Sampah: 0 Kg", "/icons/garbage.png");
+        labelTotalSampah = (JLabel) cardSampah.getComponent(1);
+
+        JPanel cardPoint = createInfoCard("Total Poin: 0 Poin", "/icons/point.png");
+        labelTotalPoin = (JLabel) cardPoint.getComponent(1);
 
         cardsPanel.add(cardSampah);
         cardsPanel.add(cardPoint);
         cardsContainer.add(cardsPanel);
 
-        // Table Section
         JPanel tablePanel = new JPanel(new BorderLayout());
         tablePanel.setBackground(warnaLatar);
         tablePanel.setBorder(new EmptyBorder(10, 20, 20, 20));
@@ -83,17 +89,8 @@ public class LayarTotalSampahPoin extends JPanel {
         tableTitle.setForeground(warnaAksen);
         tableTitle.setBorder(new EmptyBorder(0, 0, 8, 0));
 
-        // Table Setup
         String[] columnNames = {"No", "Kategori", "Berat (Kg)", "Poin", "Waktu"};
-        Object[][] data = {
-            {"1", "Komputer", "15", "50", "01/01/2025"},
-            {"2", "Ponsel", "5", "20", "02/01/2025"},
-            {"3", "Peralatan Rumah Tangga", "20", "70", "03/01/2025"},
-            {"4", "Peralatan Rumah Tangga", "20", "70", "03/01/2025"},
-            {"5", "Peralatan Rumah Tangga", "20", "70", "03/01/2025"}
-        };
-
-        DefaultTableModel model = new DefaultTableModel(data, columnNames) {
+        DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
@@ -107,7 +104,6 @@ public class LayarTotalSampahPoin extends JPanel {
         tableScrollPane.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
         tableScrollPane.getViewport().setBackground(warnaKartu);
 
-        // Custom ScrollBar
         tableScrollPane.getVerticalScrollBar().setUI(new BasicScrollBarUI() {
             @Override
             protected void configureScrollBarColors() {
@@ -137,11 +133,9 @@ public class LayarTotalSampahPoin extends JPanel {
         tablePanel.add(tableTitle, BorderLayout.NORTH);
         tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
-        // Add all components to main content
         mainContent.add(cardsContainer, BorderLayout.NORTH);
         mainContent.add(tablePanel, BorderLayout.CENTER);
 
-        // Add everything to the main panel
         add(headerTitle, BorderLayout.NORTH);
         add(mainContent, BorderLayout.CENTER);
     }
@@ -151,8 +145,8 @@ public class LayarTotalSampahPoin extends JPanel {
         card.setBackground(warnaKartu);
         card.setPreferredSize(new Dimension(350, 70));
         card.setBorder(BorderFactory.createCompoundBorder(
-            new RoundedBorder(8, new Color(200, 200, 200)),
-            new EmptyBorder(10, 15, 10, 15)
+                new RoundedBorder(8, new Color(200, 200, 200)),
+                new EmptyBorder(10, 15, 10, 15)
         ));
 
         JLabel label = new JLabel(text);
@@ -179,62 +173,56 @@ public class LayarTotalSampahPoin extends JPanel {
         table.setGridColor(new Color(230, 230, 230));
         table.setBackground(warnaKartu);
 
-        // Setup header
         JTableHeader header = table.getTableHeader();
         header.setFont(new Font("Montserrat", Font.BOLD, 13));
         header.setBackground(warnaPrimer);
         header.setForeground(Color.WHITE);
         header.setPreferredSize(new Dimension(0, 35));
 
-        // Center align all columns
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(JLabel.CENTER);
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        // Set column widths
         TableColumnModel columnModel = table.getColumnModel();
-        columnModel.getColumn(0).setPreferredWidth(10);  // No
-        columnModel.getColumn(1).setPreferredWidth(200); // Kategori
-        columnModel.getColumn(2).setPreferredWidth(25);  // Berat
-        columnModel.getColumn(3).setPreferredWidth(25);  // Poin
-        columnModel.getColumn(4).setPreferredWidth(100); // Waktu
+        columnModel.getColumn(0).setPreferredWidth(10);
+        columnModel.getColumn(1).setPreferredWidth(200);
+        columnModel.getColumn(2).setPreferredWidth(25);
+        columnModel.getColumn(3).setPreferredWidth(25);
+        columnModel.getColumn(4).setPreferredWidth(100);
     }
 
     public JButton getTombolKembali() {
         return exitButton;
     }
-}
 
-// Custom rounded border class
-class RoundedBorder extends AbstractBorder {
-    private int radius;
-    private Color color;
+    private class RoundedBorder extends AbstractBorder {
+        private final int radius;
+        private final Color color;
 
-    RoundedBorder(int radius, Color color) {
-        this.radius = radius;
-        this.color = color;
-    }
+        RoundedBorder(int radius, Color color) {
+            this.radius = radius;
+            this.color = color;
+        }
 
-    @Override
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(color);
-        g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-        g2d.dispose();
-    }
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setColor(color);
+            g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+            g2d.dispose();
+        }
 
-    @Override
-    public Insets getBorderInsets(Component c) {
-        return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
-    }
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(radius, radius, radius, radius);
+        }
 
-    @Override
-    public Insets getBorderInsets(Component c, Insets insets) {
-        insets.left = insets.top = this.radius + 1;
-        insets.right = insets.bottom = this.radius + 2;
-        return insets;
+        @Override
+        public boolean isBorderOpaque() {
+            return false;
+        }
     }
 }

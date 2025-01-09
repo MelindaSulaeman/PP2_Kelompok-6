@@ -8,7 +8,6 @@ public class Masyarakat {
     private float totalSampah;
     private int totalPoin;
 
-    // Constructor
     public Masyarakat(int idMasyarakat, String nama, String noTelp, String email, float totalSampah, int totalPoin) {
         this.idMasyarakat = idMasyarakat;
         this.nama = nama;
@@ -18,7 +17,6 @@ public class Masyarakat {
         this.totalPoin = totalPoin;
     }
 
-    // Getter dan Setter
     public int getIdMasyarakat() {
         return idMasyarakat;
     }

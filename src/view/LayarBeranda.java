@@ -21,7 +21,6 @@ public class LayarBeranda extends JPanel {
     }
 
     private void initComponents() {
-        // Panel Header
         JPanel headerPanel = new JPanel();
         headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
         headerPanel.setBackground(warnaLatar);
@@ -48,7 +47,6 @@ public class LayarBeranda extends JPanel {
         headerPanel.add(Box.createVerticalStrut(15));
         headerPanel.add(labelDeskripsi);
 
-        // Panel Tombol
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
         buttonPanel.setBackground(warnaLatar);
@@ -72,7 +70,6 @@ public class LayarBeranda extends JPanel {
         buttonPanel.add(tombolMitra);
         buttonPanel.add(Box.createVerticalGlue());
 
-        // Panel Utama
         add(headerPanel, BorderLayout.NORTH);
         add(buttonPanel, BorderLayout.CENTER);
     }
@@ -88,7 +85,6 @@ public class LayarBeranda extends JPanel {
         button.setMaximumSize(new Dimension(400, 50));
         button.setPreferredSize(new Dimension(400, 50));
 
-        // Menambahkan icon jika tersedia
         try {
             ImageIcon icon = new ImageIcon(getClass().getResource(iconPath));
             Image img = icon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
@@ -97,7 +93,6 @@ public class LayarBeranda extends JPanel {
             System.out.println("Icon not found: " + iconPath);
         }
 
-        // Hover effect
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 button.setBackground(warnaPrimer);

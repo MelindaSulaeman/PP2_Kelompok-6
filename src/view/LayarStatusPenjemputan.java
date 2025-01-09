@@ -59,7 +59,6 @@ public class LayarStatusPenjemputan extends JPanel {
     }
 
     private void initComponents() {
-        // Header Panel
         JPanel headerTitle = new JPanel(new BorderLayout());
         headerTitle.setBackground(warnaHeader);
         headerTitle.setPreferredSize(new Dimension(getWidth(), 40));

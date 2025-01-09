@@ -39,13 +39,11 @@ public class LayarSampahController {
         tombolBack1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Logic to navigate back to the previous page
             }
         });
     }
 
     private void saveWasteDetails() {
-        // Get selected waste type
         String selectedWasteType = (String) comboJenisSampah.getSelectedItem();
         if (selectedWasteType == null || selectedWasteType.equals("Pilih Jenis Sampah")) {
             JOptionPane.showMessageDialog(null, "Jenis sampah harus dipilih!");
@@ -61,10 +59,8 @@ public class LayarSampahController {
             return;
         }
 
-        // Convert berat to float
         float berat = Float.parseFloat(beratSampah);
-        
-        // Get the selected waste category (idKategori) from the database
+
         int idKategori = getCategoryIdByName(selectedWasteType);
         
         if (idKategori == -1) {
@@ -72,17 +68,15 @@ public class LayarSampahController {
             return;
         }
 
-        // Get current user's data
-        int userId = getUserId();  // Implement this method to retrieve the logged-in user id
+        int userId = getUserId();
 
-        // Insert Penjemputan data into the database
         try (Connection conn = config.getConnection()) {
             // Insert data into Penjemputan
             String query = "INSERT INTO Penjemputan (idMasyarakat, idSampah, jumlahSampah, beratSampah, deskripsi, statusPenjemputan, tglPenjemputan) VALUES (?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
                 stmt.setInt(1, userId);
-                stmt.setInt(2, idKategori);  // Use the idKategori from the database
-                stmt.setInt(3, 1);  // Example: 1 piece of the item
+                stmt.setInt(2, idKategori);
+                stmt.setInt(3, 1);
                 stmt.setFloat(4, berat);
                 stmt.setString(5, deskripsi);
                 stmt.setString(6, "Pending");
@@ -95,7 +89,6 @@ public class LayarSampahController {
                         Integer generatedId = rs.getInt(1);
                         this.idPenjemputan.setText(generatedId.toString());
                         JOptionPane.showMessageDialog(null, "Data telah disimpan. ID Penjemputan: " + generatedId);
-                        // Logic for moving to next page
                     }
                 } else {
                     JOptionPane.showMessageDialog(null, "Gagal menyimpan data penjemputan!");
@@ -125,8 +118,6 @@ public class LayarSampahController {
     }
 
     private int getUserId() {
-        // Assuming you already have a method to get the logged-in user's ID
-        // This can be from session or database depending on how user management is handled
-        return 1;  // Replace with actual logic to retrieve logged-in user ID
+        return 1;
     }
 }

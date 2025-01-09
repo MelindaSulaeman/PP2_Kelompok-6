@@ -1,6 +1,5 @@
 package controller;
 
-
 import database.config;
 import model.Kategori;
 import view.LayarJenisSampah;
@@ -30,12 +29,11 @@ public class LayarJenisSampahController {
         });
     }
 
-
-    private void loadDataKategori() {
+    public void loadDataKategori() {
         try (Connection conn = config.getConnection()) {
             String query = "SELECT idKategori, namaKategori, icon FROM kategori";
             try (PreparedStatement stmt = conn.prepareStatement(query);
-                ResultSet rs = stmt.executeQuery()) {
+                 ResultSet rs = stmt.executeQuery()) {
                 List<Kategori> listKategori = new ArrayList<>();
                 while (rs.next()) {
                     int idKategori = rs.getInt("idKategori");

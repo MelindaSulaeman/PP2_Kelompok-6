@@ -13,7 +13,6 @@ public class Penjemputan {
     private int poinDikumpulkan;
     private Date tglPenjemputan;
 
-    // Constructor
     public Penjemputan(int idPenjemputan, int idMasyarakat, String namaSampah, int idKategori, double beratSampah, String deskripsi, String statusPenjemputan, int poinDikumpulkan, Date tglPenjemputan) {
         this.idPenjemputan = idPenjemputan;
         this.idMasyarakat = idMasyarakat;
@@ -26,7 +25,6 @@ public class Penjemputan {
         this.tglPenjemputan = tglPenjemputan;
     }
 
-    // Getter dan Setter
     public int getIdPenjemputan() {
         return idPenjemputan;
     }
