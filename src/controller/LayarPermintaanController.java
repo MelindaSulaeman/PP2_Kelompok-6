@@ -50,7 +50,6 @@ public class LayarPermintaanController {
 
     }
 
-
     private synchronized void setupActions() {
         // Remove existing action listeners to prevent duplicate registrations
         for (ActionListener al : tombolNext1.getActionListeners()) {
@@ -67,7 +66,7 @@ public class LayarPermintaanController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isProcessing) {
-                    return; // Prevent double processing
+                    return;
                 }
                 synchronized (LayarPermintaanController.this) {
                     if (!isPersonalDataSaved) {
@@ -90,7 +89,7 @@ public class LayarPermintaanController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isProcessing) {
-                    return; // Prevent double processing
+                    return;
                 }
                 synchronized (LayarPermintaanController.this) {
                     if (!isLocationDataSaved) {
@@ -113,7 +112,7 @@ public class LayarPermintaanController {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (isProcessing) {
-                    return; // Prevent double processing
+                    return;
                 }
                 synchronized (LayarPermintaanController.this) {
                     if (layarPermintaan.validatePage3()) {
@@ -142,7 +141,6 @@ public class LayarPermintaanController {
             conn = config.getConnection();
             conn.setAutoCommit(false);
 
-            // Check if data already exists
             String checkQuery = "SELECT COUNT(*) FROM masyarakat WHERE email = ? AND noTelp = ?";
             stmt = conn.prepareStatement(checkQuery);
             stmt.setString(1, fieldEmail.getText());
@@ -154,7 +152,6 @@ public class LayarPermintaanController {
                 return false;
             }
 
-            // If not exists, proceed with insert
             String insertQuery = "INSERT INTO masyarakat (nama, noTelp, email, totalSampah, totalPoin) VALUES (?, ?, ?, ?, ?)";
             stmt = conn.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS);
             stmt.setString(1, fieldNama.getText());
@@ -210,14 +207,13 @@ public class LayarPermintaanController {
             conn = config.getConnection();
             conn.setAutoCommit(false);
 
-            // Check if location data already exists
             String checkQuery = "SELECT COUNT(*) FROM lokasi WHERE idMasyarakat = ?";
             stmt = conn.prepareStatement(checkQuery);
             stmt.setInt(1, idMasyarakatBaru);
             ResultSet rs = stmt.executeQuery();
 
             if (rs.next() && rs.getInt(1) > 0) {
-                return true; // Location data already exists
+                return true;
             }
 
             String query = "INSERT INTO lokasi (idMasyarakat, alamatLengkap, kota, kodePos) VALUES (?, ?, ?, ?)";
@@ -274,7 +270,7 @@ public class LayarPermintaanController {
         comboJenisSampah.setSelectedIndex(0);
         dateSpinner.setValue(new Date());
 
-        layarPermintaan.nextPage("PAGE_1"); // Kembali ke halaman pertama
+        layarPermintaan.nextPage("PAGE_1");
     }
 
 
@@ -323,7 +319,6 @@ public class LayarPermintaanController {
 
             Penjemputan penjemputan = new Penjemputan(0, idMasyarakatBaru, namaKategori, idKategori, beratSampah, deskripsi, statusPenjemputan, poinDikumpulkan, tglPenjemputan);
 
-            // Insert into penjemputan table
             String queryPenjemputan = "INSERT INTO penjemputan (idMasyarakat, namaSampah, idKategori, beratSampah, deskripsi, statusPenjemputan, poinDikumpulkan, tglPenjemputan) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
             try (PreparedStatement stmtPenjemputan = conn.prepareStatement(queryPenjemputan)) {
                 stmtPenjemputan.setInt(1, penjemputan.getIdMasyarakat());

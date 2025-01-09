@@ -27,16 +27,16 @@ public class LayarMitraController {
 
             int no = 1;
             while (rs.next()) {
-                Object[] row = {
-                    rs.getInt("idPenjemputan"),   // ID Penjemputan
-                    no++,                        // No
-                    rs.getString("nama"),        // Nama Masyarakat
-                    rs.getString("alamatLengkap"), // Alamat
-                    rs.getString("kota"),        // Kota
-                    rs.getString("namaKategori"), // Kategori Sampah
-                    rs.getString("namaSampah"),  // Nama Sampah
-                    rs.getFloat("beratSampah"),  // Berat (kg)
-                    rs.getString("statusPenjemputan") // Status
+                Object[] row = new Object[]{
+                        rs.getInt("idPenjemputan"),
+                        no++,
+                        rs.getString("nama"),
+                        rs.getString("alamatLengkap"),
+                        rs.getString("kota"),
+                        rs.getString("namaKategori"),
+                        rs.getString("namaSampah"),
+                        rs.getFloat("beratSampah"),
+                        rs.getString("statusPenjemputan")
                 };
                 tableModel.addRow(row);
             }

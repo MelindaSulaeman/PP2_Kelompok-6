@@ -16,7 +16,6 @@ public class LayarKonfirmasi extends JPanel {
     }
 
     private void initComponents() {
-        // Header Panel
         JPanel headerPanel = new JPanel(new BorderLayout());
         headerPanel.setBackground(warnaHeader);
         headerPanel.setPreferredSize(new Dimension(getWidth(), 40));
@@ -47,24 +46,20 @@ public class LayarKonfirmasi extends JPanel {
         headerContent.add(titleLabel, BorderLayout.CENTER);
         headerPanel.add(headerContent);
 
-        // Main Content Panel
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
         mainPanel.setBackground(warnaLatar);
         mainPanel.setBorder(new EmptyBorder(50, 20, 20, 20));
 
-        // Icon
         ImageIcon icon = new ImageIcon("/icons/point.png");
         Image scaledImage = icon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
         JLabel iconLabel = new JLabel(new ImageIcon(scaledImage));
         iconLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Text Labels
         JLabel titleText = new JLabel("Menunggu Konfirmasi");
         titleText.setFont(new Font("Montserrat", Font.BOLD, 16));
         titleText.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Cancel Button
         JButton cancelButton = new JButton("Cancel") {
             @Override
             protected void paintComponent(Graphics g) {
@@ -92,7 +87,6 @@ public class LayarKonfirmasi extends JPanel {
             }
         });
 
-        // Add components with spacing
         mainPanel.add(Box.createVerticalGlue());
         mainPanel.add(iconLabel);
         mainPanel.add(Box.createVerticalStrut(30));

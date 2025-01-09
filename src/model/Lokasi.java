@@ -7,7 +7,6 @@ public class Lokasi {
     private String kota;
     private String kodePos;
 
-    // Constructor
     public Lokasi(int idLokasi, int idMasyarakat, String alamatLengkap, String kota, String kodePos) {
         this.idLokasi = idLokasi;
         this.idMasyarakat = idMasyarakat;
@@ -16,7 +15,6 @@ public class Lokasi {
         this.kodePos = kodePos;
     }
 
-    // Getter dan Setter
     public int getIdLokasi() {
         return idLokasi;
     }

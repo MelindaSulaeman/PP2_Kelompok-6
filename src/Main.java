@@ -1,10 +1,11 @@
-        import java.awt.*;
-        import javax.swing.*;
+import java.awt.*;
+import javax.swing.*;
 
-        import controller.LayarPermintaanController;
-        import view.*;
+import controller.LayarPermintaanController;
+import controller.LayarJenisSampahController;
+import view.*;
 
-        public class Main extends JFrame {
+public class Main extends JFrame {
         private JPanel panelUtama;
         private CardLayout tataLetak;
         private LayarBeranda layarBeranda;
@@ -13,6 +14,7 @@
         private LayarRiwayatPenjemputan layarRiwayatPenjemputan;
         private LayarTotalSampahPoin layarTotalSampahPoin;
         private LayarMitra layarMitra;
+        private LayarJenisSampahController layarJenisSampahController;
 
         public Main() {
                 setTitle("E-Waste");
@@ -45,8 +47,11 @@
         }
 
         private void setupEventListeners() {
-                layarBeranda.getTombolLihatJenis().addActionListener(e ->
-                        tataLetak.show(panelUtama, "JENIS_SAMPAH"));
+                layarBeranda.getTombolLihatJenis().addActionListener(e -> {
+                        tataLetak.show(panelUtama, "JENIS_SAMPAH");
+                        layarJenisSampahController.loadDataKategori();
+
+                });
 
                 layarBeranda.getTombolPermintaan().addActionListener(e ->
                         tataLetak.show(panelUtama, "PERMINTAAN"));
@@ -59,19 +64,23 @@
 
                 layarJenisSampah.getTombolKembali().addActionListener(e ->
                         tataLetak.show(panelUtama, "BERANDA"));
-                
+
                 layarPermintaan.getTombolKembali().addActionListener(e ->
                         tataLetak.show(panelUtama, "BERANDA"));
 
-                layarBeranda.getTombolKurir().addActionListener(e ->
-                        tataLetak.show(panelUtama, "Mitra"));
-                
+                layarBeranda.getTombolKurir().addActionListener(e -> {
+                        tataLetak.show(panelUtama, "Mitra");
+
+                });
+
+                layarMitra.getTombolKembali().addActionListener(e ->
+                        tataLetak.show(panelUtama, "BERANDA"));
 
                 setupRiwayatListeners();
-
                 setupPoinListeners();
         }
         private void setupControllers() {
+                layarJenisSampahController = new LayarJenisSampahController(layarJenisSampah);
                 new LayarPermintaanController(
                         layarPermintaan.getFieldNama(),
                         layarPermintaan.getFieldEmail(),
@@ -108,9 +117,9 @@
 
         public static void main(String[] args) {
                 SwingUtilities.invokeLater(() -> {
-                Main app = new Main();
-                app.setLocationRelativeTo(null);
-                app.setVisible(true);
+                        Main app = new Main();
+                        app.setLocationRelativeTo(null);
+                        app.setVisible(true);
                 });
         }
-        }
+}

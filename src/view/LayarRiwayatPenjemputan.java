@@ -22,7 +22,6 @@ public class LayarRiwayatPenjemputan extends JPanel {
     }
 
     private void placeComponents() {
-        // Panel atas untuk judul
         JPanel titlePanel = new JPanel(new BorderLayout());
         titlePanel.setBackground(Color.WHITE);
         titlePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
@@ -33,13 +32,11 @@ public class LayarRiwayatPenjemputan extends JPanel {
         titleLabel.setForeground(new Color(34, 139, 34));
         titlePanel.add(titleLabel, BorderLayout.CENTER);
 
-        // Panel tengah untuk filter dan tabel
         JPanel contentPanel = new JPanel(new BorderLayout());
         contentPanel.setBackground(Color.WHITE);
         contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 20, 50));
         add(contentPanel, BorderLayout.CENTER);
 
-        // Filter panel
         JPanel filterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         filterPanel.setBackground(Color.WHITE);
 
@@ -60,10 +57,8 @@ public class LayarRiwayatPenjemputan extends JPanel {
 
         contentPanel.add(filterPanel, BorderLayout.NORTH);
 
-        // Tabel
         setupTable(contentPanel);
 
-        // Tombol kembali
         JPanel backPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         backPanel.setBackground(Color.WHITE);
         backPanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
@@ -161,7 +156,6 @@ public class LayarRiwayatPenjemputan extends JPanel {
 
     private void loadAllData() {
          tableModel.setRowCount(0);
-        // On Progress item first
          tableModel.addRow(new Object[]{1, "Sampah Elektronik", 15, 3000, "20/02/2025", "On Progress"});
         for (int i = 2; i <= 20; i++) {
            
