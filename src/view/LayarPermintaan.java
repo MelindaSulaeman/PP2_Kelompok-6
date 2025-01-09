@@ -58,7 +58,7 @@ public class LayarPermintaan extends JPanel {
         try (Connection conn = config.getConnection()) {
             String query = "SELECT idKategori, namaKategori FROM kategori";
             try (PreparedStatement stmt = conn.prepareStatement(query);
-                ResultSet rs = stmt.executeQuery()) {
+                 ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
                     int idKategori = rs.getInt("idKategori");
                     String namaKategori = rs.getString("namaKategori");

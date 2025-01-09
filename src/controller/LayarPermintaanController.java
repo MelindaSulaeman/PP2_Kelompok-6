@@ -26,12 +26,12 @@ public class LayarPermintaanController {
     private Runnable onSuccessCallback;
 
     public LayarPermintaanController(JTextField fieldNama, JTextField fieldEmail, JTextField fieldTelepon,
-                                    JButton tombolNext1, JButton tombolKembali,
-                                    JComboBox<String> comboJenisSampah, JTextField fieldBerat,
-                                    JSpinner dateSpinner, JTextArea fieldDeskripsi,
-                                    JButton tombolNext2,
-                                    JTextArea fieldAlamat, JTextField fieldKota,
-                                    JTextField fieldKodePos, JButton tombolKirim, LayarPermintaan layarPermintaan, Runnable onSuccessCallback) {
+                                     JButton tombolNext1, JButton tombolKembali,
+                                     JComboBox<String> comboJenisSampah, JTextField fieldBerat,
+                                     JSpinner dateSpinner, JTextArea fieldDeskripsi,
+                                     JButton tombolNext2,
+                                     JTextArea fieldAlamat, JTextField fieldKota,
+                                     JTextField fieldKodePos, JButton tombolKirim, LayarPermintaan layarPermintaan, Runnable onSuccessCallback) {
         this.fieldNama = fieldNama;
         this.fieldEmail = fieldEmail;
         this.fieldTelepon = fieldTelepon;
