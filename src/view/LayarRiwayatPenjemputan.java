@@ -1,23 +1,30 @@
 package view;
 
 import java.awt.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import javax.swing.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import model.Penjemputan;
+import controller.LayarRiwayatPenjemputanController;
 
 public class LayarRiwayatPenjemputan extends JPanel {
     private JPanel panel;
     private JComboBox<String> filterSelect;
     private DefaultTableModel tableModel;
     private JButton backButton;
+    private LayarRiwayatPenjemputanController controller;
 
     public LayarRiwayatPenjemputan() {
         setLayout(new BorderLayout());
         panel = new JPanel();
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
+        controller = new LayarRiwayatPenjemputanController();
         placeComponents();
     }
 
@@ -72,16 +79,16 @@ public class LayarRiwayatPenjemputan extends JPanel {
 
         add(backPanel, BorderLayout.SOUTH);
 
-        loadAllData();
+        loadData("pending_first");
 
         applyFilterButton.addActionListener(e -> {
             String selectedFilter = (String) filterSelect.getSelectedItem();
             if ("Semua".equals(selectedFilter)) {
-                loadAllData();
+                loadData("all");
             } else if ("Terbaru".equals(selectedFilter)) {
-                loadNewestData();
+                loadData("newest");
             } else if ("Terlama".equals(selectedFilter)) {
-                loadOldestData();
+                loadData("oldest");
             }
         });
     }
@@ -117,7 +124,7 @@ public class LayarRiwayatPenjemputan extends JPanel {
                 if (column == 5 && "On Progress".equals(value)) {
                     c.setForeground(Color.RED);
                 } else {
-                     c.setForeground(Color.BLACK);
+                    c.setForeground(Color.BLACK);
                 }
                 return c;
             }
@@ -150,35 +157,31 @@ public class LayarRiwayatPenjemputan extends JPanel {
                 return button;
             }
         });
-        
+
         contentPanel.add(tableScrollPane, BorderLayout.CENTER);
     }
+    private void loadData(String filter) {
+        tableModel.setRowCount(0);
+        List<Object[]> listData = controller.getPenjemputanData(filter);
 
-    private void loadAllData() {
-         tableModel.setRowCount(0);
-         tableModel.addRow(new Object[]{1, "Sampah Elektronik", 15, 3000, "20/02/2025", "On Progress"});
-        for (int i = 2; i <= 20; i++) {
-           
-             String status = i % 3 == 0 ? "Sukses" : "Sukses";
-              tableModel.addRow(new Object[]{i, "Sampah Elektronik", i * 2, i * 2 * 200, "01/01/2025", status});
-           
+        if (listData != null) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            int rowNumber = 1;
+            for (Object[] rowData : listData) {
+                Date tglPenjemputan = (Date) rowData[4];
+                String tgl = dateFormat.format(tglPenjemputan);
+                tableModel.addRow(new Object[]{
+                        rowNumber++,
+                        rowData[1],
+                        rowData[2],
+                        rowData[3],
+                        tgl,
+                        rowData[5]
+                });
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Gagal mengambil data dari database.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-    }
-
-
-    private void loadNewestData() {
-        tableModel.setRowCount(0);
-        tableModel.addRow(new Object[]{1, "Sampah Elektronik", 15, 3000, "30/12/2025", "Sukses"});
-        tableModel.addRow(new Object[]{2, "Sampah Elektronik", 8, 1600, "28/12/2025", "Sukses"});
-         tableModel.addRow(new Object[]{3, "Sampah Elektronik", 10, 2000, "27/12/2025", "On Progress"});
-    }
-
-    private void loadOldestData() {
-        tableModel.setRowCount(0);
-           tableModel.addRow(new Object[]{1, "Sampah Elektronik", 15, 3000, "10/01/2024", "On Progress"});
-        tableModel.addRow(new Object[]{2, "Sampah Elektronik", 12, 2400, "05/01/2024", "Sukses"});
-        tableModel.addRow(new Object[]{3, "Sampah Elektronik", 7, 1400, "01/01/2024", "Sukses"});
-
     }
 
     public JButton getTombolKembali() {
