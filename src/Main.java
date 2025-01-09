@@ -1,8 +1,7 @@
 import java.awt.*;
 import javax.swing.*;
 
-import controller.LayarPermintaanController;
-import controller.LayarJenisSampahController;
+import controller.*;
 import view.*;
 
 public class Main extends JFrame {
@@ -50,7 +49,6 @@ public class Main extends JFrame {
                 layarBeranda.getTombolLihatJenis().addActionListener(e -> {
                         tataLetak.show(panelUtama, "JENIS_SAMPAH");
                         layarJenisSampahController.loadDataKategori();
-
                 });
 
                 layarBeranda.getTombolPermintaan().addActionListener(e ->
@@ -62,23 +60,22 @@ public class Main extends JFrame {
                 layarBeranda.getTombolPoin().addActionListener(e ->
                         tataLetak.show(panelUtama, "TOTAL_POIN"));
 
+                layarBeranda.getTombolKurir().addActionListener(e -> {
+                        tataLetak.show(panelUtama, "Mitra");
+                });
+
                 layarJenisSampah.getTombolKembali().addActionListener(e ->
                         tataLetak.show(panelUtama, "BERANDA"));
 
                 layarPermintaan.getTombolKembali().addActionListener(e ->
                         tataLetak.show(panelUtama, "BERANDA"));
 
-                layarBeranda.getTombolKurir().addActionListener(e -> {
-                        tataLetak.show(panelUtama, "Mitra");
-
-                });
-
                 layarMitra.getTombolKembali().addActionListener(e ->
                         tataLetak.show(panelUtama, "BERANDA"));
-
                 setupRiwayatListeners();
                 setupPoinListeners();
         }
+
         private void setupControllers() {
                 layarJenisSampahController = new LayarJenisSampahController(layarJenisSampah);
                 new LayarPermintaanController(
@@ -98,13 +95,8 @@ public class Main extends JFrame {
                         layarPermintaan.getTombolKirim(),
                         layarPermintaan
                 );
+                new LayarTotalSampahPointController(layarTotalSampahPoin);
         }
-
-        private void setupPermintaanListeners() {
-                layarPermintaan.getTombolKembali().addActionListener(e ->
-                        tataLetak.show(panelUtama, "BERANDA"));
-        }
-
         private void setupRiwayatListeners() {
                 layarRiwayatPenjemputan.getTombolKembali().addActionListener(e ->
                         tataLetak.show(panelUtama, "BERANDA"));
@@ -114,6 +106,7 @@ public class Main extends JFrame {
                 layarTotalSampahPoin.getTombolKembali().addActionListener(e ->
                         tataLetak.show(panelUtama, "BERANDA"));
         }
+
 
         public static void main(String[] args) {
                 SwingUtilities.invokeLater(() -> {
