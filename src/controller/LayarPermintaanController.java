@@ -23,6 +23,7 @@ public class LayarPermintaanController {
     private boolean isPersonalDataSaved = false;
     private boolean isLocationDataSaved = false;
     private LayarPermintaan layarPermintaan;
+    private Runnable onSuccessCallback;
 
     public LayarPermintaanController(JTextField fieldNama, JTextField fieldEmail, JTextField fieldTelepon,
                                     JButton tombolNext1, JButton tombolKembali,
@@ -30,7 +31,7 @@ public class LayarPermintaanController {
                                     JSpinner dateSpinner, JTextArea fieldDeskripsi,
                                     JButton tombolNext2,
                                     JTextArea fieldAlamat, JTextField fieldKota,
-                                    JTextField fieldKodePos, JButton tombolKirim, LayarPermintaan layarPermintaan) {
+                                    JTextField fieldKodePos, JButton tombolKirim, LayarPermintaan layarPermintaan, Runnable onSuccessCallback) {
         this.fieldNama = fieldNama;
         this.fieldEmail = fieldEmail;
         this.fieldTelepon = fieldTelepon;
@@ -46,6 +47,7 @@ public class LayarPermintaanController {
         this.fieldKodePos = fieldKodePos;
         this.tombolKirim = tombolKirim;
         this.layarPermintaan = layarPermintaan;
+        this.onSuccessCallback = onSuccessCallback;
         setupActions();
 
     }
@@ -343,6 +345,11 @@ public class LayarPermintaanController {
             JOptionPane.showMessageDialog(null, "Permintaan berhasil dikirim!");
             isPersonalDataSaved = false;
             isLocationDataSaved = false;
+            // Panggil callback untuk kembali ke layar beranda
+            resetForm();
+            if (onSuccessCallback != null) {
+                onSuccessCallback.run();
+            }
 
 
         } catch (SQLException ex) {

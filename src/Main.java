@@ -93,7 +93,8 @@ public class Main extends JFrame {
                         layarPermintaan.getFieldKota(),
                         layarPermintaan.getFieldKodePos(),
                         layarPermintaan.getTombolKirim(),
-                        layarPermintaan
+                        layarPermintaan,
+                        () -> tataLetak.show(panelUtama, "BERANDA")
                 );
                 new LayarTotalSampahPointController(layarTotalSampahPoin);
         }

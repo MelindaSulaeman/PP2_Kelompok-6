@@ -97,7 +97,12 @@ public class LayarPermintaan extends JPanel {
                 dateSpinner, fieldDeskripsi,
                 tombolNext2,
                 fieldAlamat, fieldKota,
-                fieldKodePos, tombolKirim, this);
+                fieldKodePos, tombolKirim, this,
+                () -> {}
+
+        );
+        tombolBack1.addActionListener(e -> cardLayout.show(cardPanel, "PAGE_1"));
+        tombolBack2.addActionListener(e -> cardLayout.show(cardPanel, "PAGE_2"));
     }
 
 
