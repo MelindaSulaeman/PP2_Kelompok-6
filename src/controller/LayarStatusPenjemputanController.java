@@ -5,6 +5,7 @@ import java.awt.Window;
 import javax.swing.SwingUtilities;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import database.config;
 
@@ -37,5 +38,22 @@ public class LayarStatusPenjemputanController {
             e.printStackTrace();
             return false;
         }
+    }
+
+    public String getCurrentStatus(int idPenjemputan) {
+        String status = null;
+        String query = "SELECT statusPenjemputan FROM penjemputan WHERE idPenjemputan = ?";
+        try (Connection conn = config.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, idPenjemputan);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    status = rs.getString("statusPenjemputan");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return status;
     }
 }

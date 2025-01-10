@@ -12,10 +12,9 @@ public class LayarMitra extends JPanel {
     private JPanel cards;
     private JButton backToBerandaButton;
     private JPanel contentPanel;
-    private  Color warnaLatar = new Color(240, 242, 245);
+    private Color warnaLatar = new Color(240, 242, 245);
     private Color warnaPrimer = new Color(76, 153, 76);
     private Color warnaAksen = new Color(45, 136, 45);
-    private Color warnaKartu = Color.WHITE;
 
     public LayarMitra() {
         setLayout(new BorderLayout());
@@ -35,7 +34,6 @@ public class LayarMitra extends JPanel {
         cardLayout = new CardLayout();
         cards = new JPanel(cardLayout);
 
-        // Menambahkan halaman ke CardLayout
         cards.add(createPage("Pending", "Konfirmasi Penjemputan", "Penjemputan", "Page2", "Page3"), "Page1");
         cards.add(createPage("Penjemputan", "Konfirmasi Pengantaran", "Pengantaran", "Page3", "Page1"), "Page2");
         cards.add(createPage("Pengantaran", "Konfirmasi Selesai", "Selesai", "Page1", "Page2"), "Page3");
@@ -44,12 +42,9 @@ public class LayarMitra extends JPanel {
         cardLayout.show(cards, "Page1");
         add(contentPanel, BorderLayout.CENTER);
 
-
         JPanel bottomPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         bottomPanel.setBackground(warnaLatar);
-        backToBerandaButton = createButton("Kembali ke Beranda", e -> {
-
-        });
+        backToBerandaButton = createButton("Kembali ke Beranda", e -> {});
         bottomPanel.add(backToBerandaButton);
         add(bottomPanel, BorderLayout.SOUTH);
     }
@@ -64,6 +59,13 @@ public class LayarMitra extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
 
         JButton confirmButton = createButton(buttonText, e -> updateStatus(pageTable, newStatus));
+        JButton rejectButton = createButton("Tolak", e -> {
+            if ("Pending".equalsIgnoreCase(statusFilter)) {
+                deleteData(pageTable);
+            } else {
+                JOptionPane.showMessageDialog(null, "Hanya data dengan status 'Pending' yang bisa ditolak.");
+            }
+        });
 
         JButton nextButton = createButton("Next", e -> {
             refreshTable(pageTable, statusFilter);
@@ -76,6 +78,7 @@ public class LayarMitra extends JPanel {
         });
 
         buttonPanel.add(backButton);
+        buttonPanel.add(rejectButton);
         buttonPanel.add(confirmButton);
         buttonPanel.add(nextButton);
 
@@ -108,7 +111,7 @@ public class LayarMitra extends JPanel {
                 controller.updatePenjemputanStatus(idPenjemputan, newStatus);
 
                 DefaultTableModel model = (DefaultTableModel) pageTable.getModel();
-                model.setValueAt(newStatus, selectedRow, 8); // Kolom 8 untuk Status
+                model.setValueAt(newStatus, selectedRow, 8);
                 JOptionPane.showMessageDialog(null, "Status berhasil diperbarui menjadi '" + newStatus + "'.");
             } catch (NumberFormatException ex) {
                 JOptionPane.showMessageDialog(null, "ID Penjemputan tidak valid: " + ex.getMessage());
@@ -118,23 +121,43 @@ public class LayarMitra extends JPanel {
         }
     }
 
+    private void deleteData(JTable pageTable) {
+        int selectedRow = pageTable.getSelectedRow();
+        if (selectedRow != -1) {
+            int confirmation = JOptionPane.showConfirmDialog(
+                    null,
+                    "Apakah Anda yakin ingin menolak data ini?",
+                    "Konfirmasi Penolakan",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (confirmation == JOptionPane.YES_OPTION) {
+                try {
+                    int idPenjemputan = Integer.parseInt(pageTable.getValueAt(selectedRow, 0).toString());
+                    LayarMitraController controller = new LayarMitraController();
+                    controller.deletePenjemputan(idPenjemputan);
+
+                    DefaultTableModel model = (DefaultTableModel) pageTable.getModel();
+                    model.removeRow(selectedRow);
+                    JOptionPane.showMessageDialog(null, "Data berhasil ditolak dan dihapus.");
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(null, "ID Penjemputan tidak valid: " + ex.getMessage());
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Silakan pilih baris untuk ditolak.");
+        }
+    }
+
     private JButton createButton(String text, ActionListener actionListener) {
         JButton button = new JButton(text);
         button.setBackground(warnaAksen);
         button.setForeground(Color.WHITE);
         button.setPreferredSize(new Dimension(150, 30));
         button.addActionListener(actionListener);
-        button.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                button.setBackground(warnaPrimer);
-            }
-
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                button.setBackground(warnaAksen);
-            }
-        });
         return button;
     }
+
     public JButton getTombolKembali() {
         return backToBerandaButton;
     }

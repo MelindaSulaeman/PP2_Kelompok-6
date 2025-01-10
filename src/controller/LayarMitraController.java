@@ -1,4 +1,3 @@
-
 package controller;
 
 import database.config;
@@ -21,7 +20,7 @@ public class LayarMitraController {
         """;
 
         try (Connection conn = config.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(query)) {
+             PreparedStatement stmt = conn.prepareStatement(query)) {
             stmt.setString(1, statusFilter);
             ResultSet rs = stmt.executeQuery();
 
@@ -49,18 +48,35 @@ public class LayarMitraController {
 
     public void updatePenjemputanStatus(int idPenjemputan, String newStatus) {
         String query = "UPDATE penjemputan SET statusPenjemputan = ? WHERE idPenjemputan = ?";
-        
-        try (Connection conn = config.getConnection()) {
-            try (PreparedStatement stmt = conn.prepareStatement(query)) {
-                stmt.setString(1, newStatus);
-                stmt.setInt(2, idPenjemputan);
 
-                int rowsUpdated = stmt.executeUpdate();
-                if (rowsUpdated > 0) {
-                    System.out.println("Status penjemputan berhasil diperbarui.");
-                } else {
-                    System.out.println("Gagal memperbarui status penjemputan. Baris dengan idPenjemputan " + idPenjemputan + " tidak ditemukan.");
-                }
+        try (Connection conn = config.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, newStatus);
+            stmt.setInt(2, idPenjemputan);
+
+            int rowsUpdated = stmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                System.out.println("Status penjemputan berhasil diperbarui.");
+            } else {
+                System.out.println("Gagal memperbarui status penjemputan. Baris dengan idPenjemputan " + idPenjemputan + " tidak ditemukan.");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void deletePenjemputan(int idPenjemputan) {
+        String query = "DELETE FROM penjemputan WHERE idPenjemputan = ?";
+
+        try (Connection conn = config.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, idPenjemputan);
+
+            int rowsDeleted = stmt.executeUpdate();
+            if (rowsDeleted > 0) {
+                System.out.println("Penjemputan berhasil dihapus.");
+            } else {
+                System.out.println("Gagal menghapus penjemputan. Baris dengan idPenjemputan " + idPenjemputan + " tidak ditemukan.");
             }
         } catch (SQLException ex) {
             ex.printStackTrace();

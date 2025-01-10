@@ -53,7 +53,6 @@ public class LayarPermintaanController {
     }
 
     private synchronized void setupActions() {
-        // Remove existing action listeners to prevent duplicate registrations
         for (ActionListener al : tombolNext1.getActionListeners()) {
             tombolNext1.removeActionListener(al);
         }
@@ -345,7 +344,6 @@ public class LayarPermintaanController {
             JOptionPane.showMessageDialog(null, "Permintaan berhasil dikirim!");
             isPersonalDataSaved = false;
             isLocationDataSaved = false;
-            // Panggil callback untuk kembali ke layar beranda
             resetForm();
             if (onSuccessCallback != null) {
                 onSuccessCallback.run();

@@ -139,8 +139,8 @@ public class LayarPermintaan extends JPanel {
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
-        tombolNext1 = createStyledButton("Selanjutnya", "/resources/icons/next.png", true);
-        tombolKembali = createStyledButton("Kembali", "/resources/icons/back.png", false);
+        tombolNext1 = createStyledButton("Selanjutnya", true);
+        tombolKembali = createStyledButton("Kembali", false);
 
         buttonPanel.add(tombolKembali);
         buttonPanel.add(tombolNext1);
@@ -206,8 +206,8 @@ public class LayarPermintaan extends JPanel {
 
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
-        tombolBack1 = createStyledButton("Kembali", "/resources/icons/back.png", false);
-        tombolNext2 = createStyledButton("Selanjutnya", "/resources/icons/next.png", true);
+        tombolBack1 = createStyledButton("Kembali", false);
+        tombolNext2 = createStyledButton("Selanjutnya", true);
 
         buttonPanel.add(tombolBack1);
         buttonPanel.add(tombolNext2);
@@ -276,8 +276,8 @@ public class LayarPermintaan extends JPanel {
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         buttonPanel.setBackground(warnaKartu);
 
-        tombolBack2 = createStyledButton("Kembali", "/resources/icons/back.png", false);
-        tombolKirim = createStyledButton("Kirim Permintaan", "/resources/icons/send.png", true);
+        tombolBack2 = createStyledButton("Kembali", false);
+        tombolKirim = createStyledButton("Kirim Permintaan", true);
 
         buttonPanel.add(tombolBack2);
         buttonPanel.add(tombolKirim);
@@ -337,7 +337,7 @@ public class LayarPermintaan extends JPanel {
         return comboBox;
     }
 
-    private JButton createStyledButton(String text, String iconPath, boolean isPrimary) {
+    private JButton createStyledButton(String text, boolean isPrimary) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setForeground(Color.WHITE);
@@ -345,14 +345,6 @@ public class LayarPermintaan extends JPanel {
         button.setFocusPainted(false);
         button.setBorderPainted(false);
         button.setPreferredSize(new Dimension(200, 40));
-
-        try {
-            ImageIcon icon = new ImageIcon(getClass().getResource(iconPath));
-            Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-            button.setIcon(new ImageIcon(img));
-        } catch (Exception e) {
-            System.out.println("Icon not found: " + iconPath);
-        }
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -366,6 +358,7 @@ public class LayarPermintaan extends JPanel {
 
         return button;
     }
+
 
     private JPanel createFormField(String label, JComponent component) {
         JPanel panel = new JPanel();
@@ -516,4 +509,5 @@ public class LayarPermintaan extends JPanel {
     public Map<String, Integer> getCategoryMap() {
         return categoryMap;
     }
+
 }

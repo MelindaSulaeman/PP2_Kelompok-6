@@ -52,7 +52,7 @@ public class LayarBeranda extends JPanel {
         buttonPanel.setBackground(warnaLatar);
         buttonPanel.setBorder(new EmptyBorder(20, 40, 40, 40));
 
-        tombolLihatJenis = createStyledButton("Lihat Jenis dan Kategori Sampah", "/resources/icons/category.png");
+        tombolLihatJenis = createStyledButton("Jenis dan Kategori Sampah", "/resources/icons/category.png");
         tombolPermintaan = createStyledButton("Ajukan Permintaan Penjemputan", "/resources/icons/delivery.png");
         tombolRiwayat = createStyledButton("Riwayat Penjemputan", "/resources/icons/order.png");
         tombolPoin = createStyledButton("Total Sampah & Poin", "/resources/icons/total.png");
@@ -125,4 +125,5 @@ public class LayarBeranda extends JPanel {
     public JButton getTombolKurir() {
         return tombolMitra;
     }
+
 }
