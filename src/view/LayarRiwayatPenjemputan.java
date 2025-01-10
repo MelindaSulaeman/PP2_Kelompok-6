@@ -9,6 +9,8 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import controller.LayarRiwayatPenjemputanController;
@@ -18,8 +20,10 @@ public class LayarRiwayatPenjemputan extends JPanel {
     private JComboBox<String> filterSelect;
     private DefaultTableModel tableModel;
     private JButton backButton;
+    private JButton deleteCompletedButton;
     private LayarRiwayatPenjemputanController controller;
     private JTable table;
+    private Timer refreshTimer;
 
     public LayarRiwayatPenjemputan() {
         setLayout(new BorderLayout());
@@ -64,7 +68,53 @@ public class LayarRiwayatPenjemputan extends JPanel {
         applyFilterButton.setPreferredSize(new Dimension(100, 30));
         filterPanel.add(applyFilterButton);
 
-        contentPanel.add(filterPanel, BorderLayout.NORTH);
+        JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        actionPanel.setBackground(Color.WHITE);
+
+        deleteCompletedButton = new JButton("Hapus Data Selesai");
+        deleteCompletedButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
+        deleteCompletedButton.setBackground(new Color(220, 53, 69));
+        deleteCompletedButton.setForeground(Color.WHITE);
+        deleteCompletedButton.setPreferredSize(new Dimension(150, 30));
+
+        deleteCompletedButton.addActionListener(e -> {
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Apakah Anda yakin ingin menghapus semua data penjemputan yang telah selesai?",
+                    "Konfirmasi Penghapusan",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.WARNING_MESSAGE
+            );
+
+            if (confirm == JOptionPane.YES_OPTION) {
+                boolean success = controller.deleteCompletedPenjemputan();
+                if (success) {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Data penjemputan yang selesai berhasil dihapus",
+                            "Sukses",
+                            JOptionPane.INFORMATION_MESSAGE
+                    );
+                    loadData("pending_first");
+                } else {
+                    JOptionPane.showMessageDialog(
+                            this,
+                            "Gagal menghapus data penjemputan",
+                            "Error",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+            }
+        });
+
+        actionPanel.add(deleteCompletedButton);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.setBackground(Color.WHITE);
+        topPanel.add(filterPanel, BorderLayout.NORTH);
+        topPanel.add(actionPanel, BorderLayout.CENTER);
+
+        contentPanel.add(topPanel, BorderLayout.NORTH);
 
         setupTable(contentPanel);
 
@@ -72,7 +122,7 @@ public class LayarRiwayatPenjemputan extends JPanel {
         backPanel.setBackground(Color.WHITE);
         backPanel.setBorder(BorderFactory.createEmptyBorder(10, 50, 10, 50));
 
-        backButton = new JButton("Back");
+        backButton = new JButton("Kembali");
         backButton.setFont(new Font("Segoe UI", Font.BOLD, 14));
         backButton.setBackground(new Color(34, 139, 34));
         backButton.setForeground(Color.WHITE);
@@ -86,13 +136,15 @@ public class LayarRiwayatPenjemputan extends JPanel {
         applyFilterButton.addActionListener(e -> {
             String selectedFilter = (String) filterSelect.getSelectedItem();
             if ("Semua".equals(selectedFilter)) {
-                loadData("all");
+                startAutoRefresh("all");
             } else if ("Terbaru".equals(selectedFilter)) {
-                loadData("newest");
+                startAutoRefresh("newest");
             } else if ("Terlama".equals(selectedFilter)) {
-                loadData("oldest");
+                startAutoRefresh("oldest");
             }
         });
+
+        startAutoRefresh("pending_first");
     }
 
     private void setupTable(JPanel contentPanel) {
@@ -116,30 +168,22 @@ public class LayarRiwayatPenjemputan extends JPanel {
         table.getColumnModel().getColumn(0).setMaxWidth(0);
         table.getColumnModel().getColumn(0).setWidth(0);
 
-        table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-            @Override
-            public Component getTableCellRendererComponent(JTable table, Object value,
-                                                           boolean isSelected, boolean hasFocus, int row, int column) {
-                Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-                if (!isSelected) {
-                    c.setBackground(row % 2 == 0 ? Color.WHITE : new Color(240, 255, 240));
-                }
-                ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
-                return c;
-            }
-        });
-
-        table.getColumnModel().getColumn(5).setCellRenderer(new LinkRenderer());
-
         table.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int row = table.rowAtPoint(e.getPoint());
-                int col = table.columnAtPoint(e.getPoint());
-                if (row >= 0 && col == 5) {
-                    int idPenjemputan = (int) table.getValueAt(row, 0);
-                    String status = (String) table.getValueAt(row, 5);
-                    openStatusPerjalanan(idPenjemputan, status);
+                int row = table.getSelectedRow();
+                int column = table.getSelectedColumn();
+
+                if (column == 5) {
+                    int idPenjemputan = Integer.parseInt(tableModel.getValueAt(row, 0).toString());
+                    String status = tableModel.getValueAt(row, column).toString();
+
+                    JFrame frame = new JFrame("Status Penjemputan");
+                    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                    frame.add(new LayarStatusPenjemputan(idPenjemputan));
+                    frame.pack();
+                    frame.setLocationRelativeTo(null);
+                    frame.setVisible(true);
                 }
             }
         });
@@ -183,40 +227,21 @@ public class LayarRiwayatPenjemputan extends JPanel {
         }
     }
 
-    private void openStatusPerjalanan(int idPenjemputan, String status) {
-        System.out.println("ID Penjemputan: " + idPenjemputan + ", Status: " + status);
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame();
-            LayarStatusPenjemputan layarStatusPenjemputan = new LayarStatusPenjemputan(idPenjemputan);
-            layarStatusPenjemputan.setStatusColor(status);
-            frame.add(layarStatusPenjemputan);
-            frame.setUndecorated(true);
-            frame.pack();
-            frame.setLocationRelativeTo(SwingUtilities.getWindowAncestor(this));
-            frame.setVisible(true);
+    private void startAutoRefresh(String filter) {
+        if (refreshTimer != null) {
+            refreshTimer.stop();
+        }
+        refreshTimer = new Timer(5000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                loadData(filter);
+                System.out.println("Data refreshed.");
+            }
         });
+        refreshTimer.start();
     }
 
     public JButton getTombolKembali() {
         return backButton;
-    }
-
-    class LinkRenderer extends DefaultTableCellRenderer {
-        @Override
-        public Component getTableCellRendererComponent(JTable table, Object value,
-                                                       boolean isSelected, boolean hasFocus, int row, int column) {
-            JLabel label = new JLabel();
-            String status = (String) value;
-            label.setText("<html><u>" + value + "</u></html>");
-            label.setHorizontalAlignment(JLabel.CENTER);
-
-            if ("Pending".equals(status)) {
-                label.setForeground(Color.RED);
-            } else {
-                label.setForeground(new Color(34, 139, 34)); // Hijau
-            }
-
-            return label;
-        }
     }
 }

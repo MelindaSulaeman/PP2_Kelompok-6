@@ -2,6 +2,7 @@ package view;
 
 import controller.LayarTotalSampahPointController;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.plaf.basic.BasicScrollBarUI;
@@ -13,6 +14,7 @@ public class LayarTotalSampahPoin extends JPanel {
     public JTable tableRiwayat;
     private JButton exitButton;
     private LayarTotalSampahPointController controller;
+    private Timer refreshTimer;
 
     private Color warnaLatar = new Color(240, 242, 245);
     private Color warnaPrimer = new Color(76, 153, 76);
@@ -25,10 +27,18 @@ public class LayarTotalSampahPoin extends JPanel {
         setBackground(warnaLatar);
         initComponents();
         initController();
+        startAutoRefresh();
     }
 
     public void initController() {
         controller = new LayarTotalSampahPointController(this);
+    }
+
+    private void startAutoRefresh() {
+        refreshTimer = new Timer(5000, (ActionEvent e) -> {
+            controller.tampilRiwayatPenjemputan();
+        });
+        refreshTimer.start();
     }
 
     private void initComponents() {

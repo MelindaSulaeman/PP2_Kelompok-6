@@ -82,4 +82,19 @@ public class LayarRiwayatPenjemputanController {
         }
         return "Unknown Category";
     }
+
+    public boolean deleteCompletedPenjemputan() {
+        String query = "DELETE FROM penjemputan WHERE statusPenjemputan = 'Selesai'";
+
+        try (Connection connection = config.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            int rowsAffected = preparedStatement.executeUpdate();
+            return rowsAffected > 0;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

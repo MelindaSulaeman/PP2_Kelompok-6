@@ -3,7 +3,6 @@ package view;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.*;
-import javax.swing.border.AbstractBorder;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 import java.util.HashMap;
@@ -30,17 +29,19 @@ public class LayarStatusPenjemputan extends JPanel {
         setupStatusColorMap();
         initComponents();
         controller = new LayarStatusPenjemputanController(this, idPenjemputan);
+
+        String currentStatus = controller.getCurrentStatus(idPenjemputan);
+        setStatusColor(currentStatus);
     }
 
     private void setupStatusColorMap() {
+        statusColorMap.put("Pending", Color.RED);
         statusColorMap.put("Penjemputan", new Color(34, 139, 34));
         statusColorMap.put("Pengantaran", new Color(34, 139, 34));
         statusColorMap.put("Selesai", new Color(34, 139, 34));
-        statusColorMap.put("Pending", Color.RED);
     }
 
     public void setStatusColor(String status) {
-        System.out.println("Status received by LayarStatusPenjemputan: " + status);
         this.status = status;
         if (timelinePanel != null) {
             applyStatusColor();
@@ -71,19 +72,13 @@ public class LayarStatusPenjemputan extends JPanel {
                                     String labelText = label.getText();
 
                                     if (labelText != null && statusColorMap.containsKey(labelText)) {
-                                        if ("Pending".equals(status)) {
-
-                                            label.setForeground(labelText.equals("Pending") ? Color.RED : warnaSubText);
+                                        if (shouldColor) {
+                                            label.setForeground(new Color(34, 139, 34));
                                         } else {
-
-                                            if (shouldColor) {
-                                                label.setForeground(new Color(34, 139, 34));
-                                            } else {
-                                                label.setForeground(warnaSubText);
-                                            }
+                                            label.setForeground(warnaSubText);
                                         }
 
-                                        if (labelText.equals(status)) {
+                                        if (labelText.equalsIgnoreCase(status)) {
                                             shouldColor = false;
                                         }
                                     }
@@ -97,11 +92,7 @@ public class LayarStatusPenjemputan extends JPanel {
     }
 
     private void setButtonCancel() {
-        if ("Pending".equalsIgnoreCase(status)) {
-            cancelButton.setVisible(true);
-        } else {
-            cancelButton.setVisible(false);
-        }
+        cancelButton.setVisible("Pending".equalsIgnoreCase(status));
     }
 
     private void initComponents() {

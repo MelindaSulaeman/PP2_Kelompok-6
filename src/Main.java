@@ -48,33 +48,40 @@ public class Main extends JFrame {
         private void setupEventListeners() {
                 layarBeranda.getTombolLihatJenis().addActionListener(e -> {
                         tataLetak.show(panelUtama, "JENIS_SAMPAH");
-                        layarJenisSampahController.loadDataKategori();
                 });
 
-                layarBeranda.getTombolPermintaan().addActionListener(e ->
-                        tataLetak.show(panelUtama, "PERMINTAAN"));
+                layarBeranda.getTombolPermintaan().addActionListener(e -> {
+                        tataLetak.show(panelUtama, "PERMINTAAN");
+                });
 
-                layarBeranda.getTombolRiwayat().addActionListener(e ->
-                        tataLetak.show(panelUtama, "RIWAYAT_PENJEMPUTAN"));
+                layarBeranda.getTombolRiwayat().addActionListener(e -> {
+                        tataLetak.show(panelUtama, "RIWAYAT_PENJEMPUTAN");
+                });
 
-                layarBeranda.getTombolPoin().addActionListener(e ->
-                        tataLetak.show(panelUtama, "TOTAL_POIN"));
+                layarBeranda.getTombolPoin().addActionListener(e -> {
+                        tataLetak.show(panelUtama, "TOTAL_POIN");
+                });
 
                 layarBeranda.getTombolKurir().addActionListener(e -> {
                         tataLetak.show(panelUtama, "Mitra");
                 });
 
                 layarJenisSampah.getTombolKembali().addActionListener(e ->
-                        tataLetak.show(panelUtama, "BERANDA"));
+                        tataLetak.show(panelUtama, "BERANDA")
+                );
 
                 layarPermintaan.getTombolKembali().addActionListener(e ->
-                        tataLetak.show(panelUtama, "BERANDA"));
+                        tataLetak.show(panelUtama, "BERANDA")
+                );
 
                 layarMitra.getTombolKembali().addActionListener(e ->
-                        tataLetak.show(panelUtama, "BERANDA"));
+                        tataLetak.show(panelUtama, "BERANDA")
+                );
+
                 setupRiwayatListeners();
                 setupPoinListeners();
         }
+
 
         private void setupControllers() {
                 layarJenisSampahController = new LayarJenisSampahController(layarJenisSampah);

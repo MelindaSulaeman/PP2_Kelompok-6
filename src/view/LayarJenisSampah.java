@@ -14,7 +14,6 @@ public class LayarJenisSampah extends JPanel {
     private Color warnaAksen = new Color(45, 136, 45);
     private Color warnaKartu = Color.WHITE;
 
-
     public LayarJenisSampah() {
         setLayout(new BorderLayout());
         setBackground(warnaLatar);
@@ -31,7 +30,6 @@ public class LayarJenisSampah extends JPanel {
         labelJudul.setForeground(warnaPrimer);
         headerPanel.add(labelJudul);
 
-
         contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.setBackground(warnaLatar);
@@ -41,17 +39,14 @@ public class LayarJenisSampah extends JPanel {
         scrollPane.setBorder(null);
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-
-        tombolKembali = createStyledButton("Kembali ke Menu Utama", "/icons/back.png");
-
-
+        tombolKembali = createStyledButton("Kembali");
 
         JPanel mainPanel = new JPanel(new BorderLayout());
         mainPanel.add(scrollPane, BorderLayout.CENTER);
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.setBackground(warnaLatar);
-        bottomPanel.setBorder(new EmptyBorder(20,0,20,0));
+        bottomPanel.setBorder(new EmptyBorder(20, 0, 20, 0));
         bottomPanel.add(tombolKembali);
 
         add(headerPanel, BorderLayout.NORTH);
@@ -62,14 +57,12 @@ public class LayarJenisSampah extends JPanel {
     public void updateCategoryCards(List<Kategori> listKategori) {
         contentPanel.removeAll();
         for (Kategori kategori : listKategori) {
-            contentPanel.add(createCategoryCard(kategori.getNamaKategori(),"", kategori.getIcon()));
+            contentPanel.add(createCategoryCard(kategori.getNamaKategori(), "", kategori.getIcon()));
             contentPanel.add(Box.createVerticalStrut(15));
         }
         contentPanel.revalidate();
         contentPanel.repaint();
     }
-
-
 
     private JPanel createCategoryCard(String title, String description, String iconPath) {
         JPanel card = new JPanel();
@@ -114,22 +107,13 @@ public class LayarJenisSampah extends JPanel {
         return card;
     }
 
-
-    private JButton createStyledButton(String text, String iconPath) {
+    private JButton createStyledButton(String text) {
         JButton button = new JButton(text);
         button.setFont(new Font("Arial", Font.BOLD, 14));
         button.setForeground(Color.WHITE);
         button.setBackground(warnaAksen);
         button.setFocusPainted(false);
         button.setBorderPainted(false);
-
-        try {
-            ImageIcon icon = new ImageIcon(getClass().getResource(iconPath));
-            Image img = icon.getImage().getScaledInstance(24, 24, Image.SCALE_SMOOTH);
-            button.setIcon(new ImageIcon(img));
-        } catch (Exception e) {
-            System.out.println("Icon not found: " + iconPath);
-        }
 
         button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
